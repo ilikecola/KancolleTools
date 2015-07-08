@@ -207,27 +207,16 @@ namespace KancolleMacro
         private void button1_Click(object sender, EventArgs e)
         {
             if(_switch == 0){
-                if (GamehWnd != IntPtr.Zero)
+                DelayStart = int.Parse(textBox1.Text) * 60;
+                if (DelayStart > 0)
                 {
-                    listBox1.Items.Insert(0,currentTimestr + " 开始启用");
-                    label21.Text = "已启动";
-                    Startinital(); 
+                    delaytimer.Enabled = true;
                 }
                 else
                 {
-                    FindKCV();
-                    if (GamehWnd != IntPtr.Zero)
-                    {
-                        listBox1.Items.Insert(0,currentTimestr + " 开始启用");
-                        label21.Text = "已启动";
-                        Startinital();                       
-                    }
-                    else
-                    {
-                        MessageBox.Show("句柄未找到，请手动设置");
-                        listBox1.Items.Insert(0,currentTimestr + " 句柄未找到，请手动设置");
-                    }
+                    before_start();
                 }
+                
             }              
         }
 
@@ -479,8 +468,9 @@ namespace KancolleMacro
             {               
                 label21.Text = "延迟脚本自动开始";
                 listBox1.Items.Insert(0, currentTimestr + " 延迟脚本自动开始");
-                Startinital(); ;
-            }           
+                before_start();
+                delaytimer.Enabled = false;
+            }
         }
 
         private void autostop_Tick(object sender, EventArgs e)
@@ -495,7 +485,33 @@ namespace KancolleMacro
                 listBox1.Items.Insert(0, currentTimestr + " 到达自动停止时间");
                 autostop.Enabled = false;
                 StopThread();
+                this.Enabled = false;
             }
+        }
+
+        private void before_start()
+        {
+            if (GamehWnd != IntPtr.Zero)
+                {
+                    listBox1.Items.Insert(0,currentTimestr + " 开始启用");
+                    label21.Text = "已启动";
+                    Startinital();
+                }
+                else 
+                {
+                    FindKCV();
+                    if (GamehWnd != IntPtr.Zero)
+                    {
+                        listBox1.Items.Insert(0,currentTimestr + " 开始启用");
+                        label21.Text = "已启动";
+                        Startinital();                       
+                    }
+                    else
+                    {
+                        MessageBox.Show("句柄未找到，请手动设置");
+                        listBox1.Items.Insert(0,currentTimestr + " 句柄未找到，请手动设置");
+                    }
+                }
         }
 
         private void Startinital()
@@ -528,8 +544,7 @@ namespace KancolleMacro
                     convarible.Team_GO[0] = checkBox1.Checked;
                     convarible.Team_GO[1] = checkBox2.Checked;
                     convarible.Team_GO[2] = checkBox3.Checked;
-                    OverTime = int.Parse(textBox6.Text);
-                    DelayStart = int.Parse(textBox1.Text) * 60;
+                    OverTime = int.Parse(textBox6.Text);                    
                     StopTime = int.Parse(textBox2.Text) * 60 * 60 + int.Parse(textBox3.Text) * 60;//转换成秒
                     listBox1.Items.Insert(0, currentTimestr + " 读取设置完成");
                     listBox1.Items.Insert(0, currentTimestr + " 开始倒计时");
@@ -564,45 +579,38 @@ namespace KancolleMacro
                     label18.Text = fleet2count.ToString();
 
                     _switch = 1;
-                    if (DelayStart > 0)
+                    if (checkBox7.Checked == true)
                     {
-                        delaytimer.Enabled = true;
-                    }
-                    else
-                    {
-                        if (checkBox7.Checked == true)
+                        int all;
+                        if ((int.Parse(textBox8.Text) < currentTime.Hour) || (int.Parse(textBox8.Text) == currentTime.Hour && int.Parse(textBox7.Text) <= currentTime.Minute))
                         {
-                            int all;
-                            if ((int.Parse(textBox8.Text) < currentTime.Hour) || (int.Parse(textBox8.Text) == currentTime.Hour && int.Parse(textBox7.Text) <= currentTime.Minute))
-                            {
-                                //先计算到当天0点的剩余时间
-                                int Day1Hour = 24 - (currentTime.Hour + 1);
-                                int Day1min = 60 - (currentTime.Minute + 1);
-                                int Day1sec = 60 - currentTime.Second;
-                                int Day1alltosec = Day1Hour * 60 * 60 + Day1min * 60 + Day1sec;
-                                //计算第二天的剩余时间
-                                int Day2hour = int.Parse(textBox8.Text);
-                                int Day2min = int.Parse(textBox7.Text);
-                                int Day2alltosec = Day2hour * 60 * 60 + Day2min * 60;
-                                //计算综合
-                                all = Day1alltosec + Day2alltosec;
-                            }
-                            else
-                            {
-                                int lefthour = int.Parse(textBox8.Text) - (currentTime.Hour + 1);
-                                int leftmin = 60 - (currentTime.Minute + 1);
-                                int leftsec = 60 - currentTime.Second;
-                                all = int.Parse(textBox7.Text) * 60 + lefthour * 60 * 60 + leftmin * 60 + leftsec;
-                            }
-                            StopTime = all;
-                            autostop.Enabled = true;
+                            //先计算到当天0点的剩余时间
+                            int Day1Hour = 24 - (currentTime.Hour + 1);
+                            int Day1min = 60 - (currentTime.Minute + 1);
+                            int Day1sec = 60 - currentTime.Second;
+                            int Day1alltosec = Day1Hour * 60 * 60 + Day1min * 60 + Day1sec;
+                            //计算第二天的剩余时间
+                            int Day2hour = int.Parse(textBox8.Text);
+                            int Day2min = int.Parse(textBox7.Text);
+                            int Day2alltosec = Day2hour * 60 * 60 + Day2min * 60;
+                            //计算综合
+                            all = Day1alltosec + Day2alltosec;
                         }
+                        else
+                        {
+                            int lefthour = int.Parse(textBox8.Text) - (currentTime.Hour + 1);
+                            int leftmin = 60 - (currentTime.Minute + 1);
+                            int leftsec = 60 - currentTime.Second;
+                            all = int.Parse(textBox7.Text) * 60 + lefthour * 60 * 60 + leftmin * 60 + leftsec;
+                        }
+                        StopTime = all;
+                        autostop.Enabled = true;
+                   }
 
 
-                        label70.Text = "脚本开始";
-                        listBox1.Items.Insert(0, currentTimestr + " 脚本开始");
-                        fleetJudge();
-                    }
+                   label70.Text = "脚本开始";
+                   listBox1.Items.Insert(0, currentTimestr + " 脚本开始");
+                   fleetJudge();
                 }
                 else
                 {
