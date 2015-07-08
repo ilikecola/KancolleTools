@@ -478,8 +478,8 @@ namespace KancolleMacro
             if (DelayStart <= 0)
             {               
                 label21.Text = "延迟脚本自动开始";
-                listBox1.Items.Insert(0, currentTimestr + " 到达自动停止时间");
-                StopThread();
+                listBox1.Items.Insert(0, currentTimestr + " 延迟脚本自动开始");
+                Startinital(); ;
             }           
         }
 
