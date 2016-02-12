@@ -117,6 +117,7 @@ namespace KancolleMacro
                     GetExpedition();
                 }
                 //==========判断是否回港
+                Thread.Sleep(1000 + this.RndTime());
                 HomeBack = actioneevent.GetPixelColor(GameHwnd, 196, 240);
                 if(HomeBack == "209BFB"){
                     break; 
@@ -228,7 +229,7 @@ namespace KancolleMacro
                 threadmanager[TeamNO - 2].Sendlistboxmessage("补给2队完成");
             }
             
-            Thread.Sleep(500 + this.RndTime());
+            Thread.Sleep(250 + this.RndTime());
             //补给3队
             if (convarible.Team_GO[1] == true && convarible.TeamSupply[1] == true)
             {
@@ -237,7 +238,7 @@ namespace KancolleMacro
                 threadmanager[TeamNO - 2].Sendlistboxmessage("补给3队完成");
             }
             
-            Thread.Sleep(500 + this.RndTime());
+            Thread.Sleep(250 + this.RndTime());
             //补给4队
             if (convarible.Team_GO[2] == true && convarible.TeamSupply[2] == true)
             {
@@ -246,7 +247,7 @@ namespace KancolleMacro
                 threadmanager[TeamNO - 2].Sendlistboxmessage("补给4队完成");
             }
            
-            Thread.Sleep(500 + this.RndTime());
+            Thread.Sleep(250 + this.RndTime());
 
             convarible.NeedSupply = false;
             threadmanager[TeamNO - 2].Sendlistboxmessage("补给完成");
@@ -259,17 +260,20 @@ namespace KancolleMacro
             for (int i = 0; i == 0; )
             {
                 String SelectAll;
-                Thread.Sleep(400 + this.RndTime());
+                Thread.Sleep(200 + this.RndTime());
+                actioneevent.MOUSEMOVE(GameHwnd, 120, 120);
+                Thread.Sleep(200 + this.RndTime());
                 SelectAll = actioneevent.GetPixelColor(GameHwnd, 120, 120);
-
-                if(SelectAll != "B1C0D0"){
-                    actioneevent.LeftClick(GameHwnd,120 + this.RndPixel(),120 + this.RndPixel());    
-                    Thread.Sleep(300 + this.RndTime());
+                if (SelectAll != "87959B")
+                {
+                    actioneevent.LeftClick(GameHwnd, 120 + this.RndPixel(), 120 + this.RndPixel());
+                    //Thread.Sleep(200 + this.RndTime());
                     //actioneevent.LeftClick(GameHwnd, 695 + this.RndPixel(), 442 + this.RndPixel());
                     threadmanager[TeamNO - 2].Sendlistboxmessage("正在补给");
                     Thread.Sleep(1000 + this.RndTime());
-                }
+                }               
                 actioneevent.MOUSEMOVE(GameHwnd, 120, 120);
+                Thread.Sleep(500 + this.RndTime());
                 SelectAll = actioneevent.GetPixelColor(GameHwnd, 120, 120);
                 if (SelectAll == "87959B")
                 {

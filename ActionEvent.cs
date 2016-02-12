@@ -36,15 +36,16 @@ namespace KancolleMacro
             //x为低16位
             yPos = yPos + convarible.poiYcorrect;
             this.MOUSEMOVE(hWnd, xPos, yPos);
-            Thread.Sleep(5 + RndTime());
+            Thread.Sleep(200 + RndTime());
             PostMessage(hWnd, WM_LBUTTONDOWN, 0, (yPos << 16) | xPos);
-            Thread.Sleep(5 + RndTime());
+            Thread.Sleep(100 + RndTime());
             PostMessage(hWnd, WM_LBUTTONUP, 0, (yPos << 16) | xPos);
         }
 
         //后台取色部分
         public string GetPixelColor(IntPtr hWnd, int xPos, int yPos)
         {
+            this.MOUSEMOVE(hWnd, 0,0);
             yPos = yPos + convarible.poiYcorrect;
             string PixelColor = "";
             Point p = new Point(xPos, yPos);
