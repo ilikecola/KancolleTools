@@ -573,10 +573,9 @@ namespace KancolleMacro
                     listBox1.Items.Insert(0,currentTimestr + " 开始启用");
                     label21.Text = "已启动";
                     Startinital();
-                }
-                else 
+                }else
                 {
-                    FindKCV();
+                    askbrowser();
                     if (GamehWnd != IntPtr.Zero)
                     {
                         listBox1.Items.Insert(0,currentTimestr + " 开始启用");
