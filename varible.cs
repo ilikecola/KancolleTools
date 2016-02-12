@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KancolleMacro
+﻿namespace KancolleMacro
 {
     public class convarible
     {
@@ -32,6 +26,9 @@ namespace KancolleMacro
         public static bool[] Threadflag;
         //其他设置
         public static bool NeedSupply;//设置补给flag
+        //poiY轴修正
+        public static int poiXcorrect = 0;
+        public static int poiYcorrect = 0;
 
         public static void inital()
         {

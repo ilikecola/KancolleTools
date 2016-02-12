@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Drawing;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 
 namespace KancolleMacro
@@ -25,10 +21,22 @@ namespace KancolleMacro
         const int WM_LBUTTONUP = 0x202;
         const int MK_LBUTTON = 0x0001;
 
+        public void MOUSEMOVE(IntPtr hWnd, int xPos, int yPos)
+        {
+            //y为高16位
+            //x为低16位
+            yPos = yPos + convarible.poiYcorrect;
+            PostMessage(hWnd, WM_MOUSEMOVE, 0, (yPos << 16) | xPos);
+            Thread.Sleep(5 + RndTime());
+        }
+
         public void LeftClick(IntPtr hWnd, int xPos, int yPos)
         {
             //y为高16位
             //x为低16位
+            yPos = yPos + convarible.poiYcorrect;
+            this.MOUSEMOVE(hWnd, xPos, yPos);
+            Thread.Sleep(5 + RndTime());
             PostMessage(hWnd, WM_LBUTTONDOWN, 0, (yPos << 16) | xPos);
             Thread.Sleep(5 + RndTime());
             PostMessage(hWnd, WM_LBUTTONUP, 0, (yPos << 16) | xPos);
@@ -37,6 +45,7 @@ namespace KancolleMacro
         //后台取色部分
         public string GetPixelColor(IntPtr hWnd, int xPos, int yPos)
         {
+            yPos = yPos + convarible.poiYcorrect;
             string PixelColor = "";
             Point p = new Point(xPos, yPos);
             IntPtr hdc = GetDC(hWnd);

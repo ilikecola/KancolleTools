@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -51,6 +46,8 @@ namespace KancolleMacro
         //窗口相关
         IntPtr GamehWnd= new IntPtr(0);
         IntPtr KCVhWnd = new IntPtr(0);
+        IntPtr POIhWnd = new IntPtr(0);
+        IntPtr _74hWnd = new IntPtr(0);
         int Gamewidth = 0; //窗口的宽度
         int Gameheight = 0; //窗口的高度
         int KCVposX;
@@ -196,12 +193,92 @@ namespace KancolleMacro
                     }                    
                 }
             }
+            else
+            {
+                MessageBox.Show("未找到KCV窗口请检查");
+                listBox1.Items.Insert(0, currentTimestr + " 未找到KCV窗口");              
+            }
             
+        }
+
+        private void FindPOI()
+        {
+            IntPtr ParenthWnd = new IntPtr(0);
+            IntPtr childHwnd = new IntPtr(0);
+            ParenthWnd = FindWindow(null, "poi");
+            //判断这个窗体是否有效 
+            if (ParenthWnd != IntPtr.Zero)
+            {
+                POIhWnd = ParenthWnd;
+                childHwnd = FindWindowEx(ParenthWnd, IntPtr.Zero, "Chrome_RenderWidgetHostHWND", null);
+                RECT rc = new RECT();
+                GetWindowRect(childHwnd, ref rc);
+                Gamewidth = rc.Right - rc.Left; //窗口的宽度
+                Gameheight = rc.Bottom - rc.Top; //窗口的高度
+                                                 //int x = rc.Left;
+                                                 //int y = rc.Top;
+                convarible.poiXcorrect = -(Gamewidth - 800);
+                int[] correct = this.handleYCorrect(childHwnd);
+                if (correct[1] == 1)
+                {                    
+                    convarible.poiYcorrect = correct[0];
+                    GamehWnd = childHwnd;
+                    label22.Text = GamehWnd.ToString();
+                    label62.Text = GamehWnd.ToString();
+                    listBox1.Items.Insert(0, currentTimestr + " 自动动设置句柄成功 句柄为:" + GamehWnd.ToString());
+                    MessageBox.Show("已自动找到POI窗口 窗口大小" + Gamewidth + "x" + Gameheight);
+                    
+                }                
+            }
+            else
+            {
+                MessageBox.Show("未找到POI窗口请检查");
+                listBox1.Items.Insert(0, currentTimestr + " 未找到POI窗口请检查");
+            }
+        }
+
+        private int[] handleYCorrect(IntPtr hWnd)
+        {
+            int i;
+            int[] correct = new int[2];
+            correct[0] = 0;
+            correct[1] = 0;
+            ActionEvent actioneevent = new ActionEvent();
+            for (i = 0;i<200;i++)
+            {
+                string PixelColor = actioneevent.GetPixelColor(hWnd, 650, 0 + i);
+                if (PixelColor == "228AA6" || PixelColor == "228AA5")
+                {
+                    correct[0] = i;
+                    correct[1] = 1;
+                    break;
+                }
+            }
+            return correct;
+        }
+
+        private void askbrowser()
+        {
+            askwhichbrowser askwhichbrowser = new askwhichbrowser();
+            askwhichbrowser.InitializeComponent();
+            askwhichbrowser.StartPosition = FormStartPosition.CenterParent;
+            askwhichbrowser.ShowDialog();
+            int broswer = askwhichbrowser.Getbrowser();
+            askwhichbrowser.Dispose();
+            switch (broswer)
+            {
+                case 0:
+                    FindPOI();
+                    break;
+                case 1: FindKCV();
+                    break;
+                default: break;
+            }
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            FindKCV();
+            this.askbrowser();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -235,19 +312,19 @@ namespace KancolleMacro
             MessageBox.Show("句柄为" + GamehWnd + " " + "窗口大小为" + Gamewidth + "x" + Gameheight);
             if (Gamewidth != 800 || Gameheight != 480)
             {
-                MessageBox.Show("窗口大小不正确 请重新自动/手动获取句柄");
+                MessageBox.Show("窗口大小不正确 请重新自动/手动获取句柄 POI请使用自动模式");
                 GamehWnd = IntPtr.Zero;
                 Gamewidth = 0;
                 Gameheight = 0;
                 label22.Text = "未设定";
                 label62.Text = "未设定";
-                listBox1.Items.Insert(0,currentTimestr + " 窗口大小不正确 请重新自动/手动获取句柄");
+                listBox1.Items.Insert(0, currentTimestr + " 窗口大小不正确 请重新自动/手动获取句柄");
             }
             else
             {
                 label22.Text = GamehWnd.ToString();
                 label62.Text = GamehWnd.ToString();
-                listBox1.Items.Insert(0,currentTimestr + " 手动设置句柄成功 句柄为:" + GamehWnd.ToString());
+                listBox1.Items.Insert(0, currentTimestr + " 手动设置句柄成功 句柄为:" + GamehWnd.ToString());
             }
         }       
 
@@ -790,7 +867,6 @@ namespace KancolleMacro
 
         private void Main_Shown(object sender, EventArgs e)
         {
-            FindKCV();
         }
 
         private double rndint()
@@ -829,11 +905,10 @@ namespace KancolleMacro
         private void button7_Click(object sender, EventArgs e)
         {
             imageCapture captureBMP = new imageCapture();
-            Bitmap bmp = new Bitmap(800, 480);
-            bmp = captureBMP.GetWindowImage(GamehWnd);
+            Image img = captureBMP.GetWindowImage(GamehWnd);
             string dir = System.AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
             String Timestr = currentTime.ToString("HHmmss");
-            bmp.Save(dir + Timestr + ".jpg", ImageFormat.Jpeg);
+            img.Save(dir + Timestr + ".jpg", ImageFormat.Jpeg);
             Process.Start(dir + Timestr + ".jpg");
             listBox1.Items.Insert(0, currentTimestr + " 已截屏");
             listBox1.Items.Insert(0, currentTimestr + " 保存路径为:" + dir + Timestr + ".jpg");
@@ -955,6 +1030,7 @@ namespace KancolleMacro
         {
             this.SaveLog();
         }
+
     }
 
 }

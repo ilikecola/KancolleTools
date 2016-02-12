@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Windows.Forms;
 
 
 namespace KancolleMacro
-{  
+{
     public class ActionThread
     {
         //用户设置
@@ -266,15 +262,16 @@ namespace KancolleMacro
                 Thread.Sleep(400 + this.RndTime());
                 SelectAll = actioneevent.GetPixelColor(GameHwnd, 120, 120);
 
-                if(SelectAll != "B1C0D0"){                   
+                if(SelectAll != "B1C0D0"){
                     actioneevent.LeftClick(GameHwnd,120 + this.RndPixel(),120 + this.RndPixel());    
                     Thread.Sleep(300 + this.RndTime());
-                    actioneevent.LeftClick(GameHwnd, 695 + this.RndPixel(), 442 + this.RndPixel());
+                    //actioneevent.LeftClick(GameHwnd, 695 + this.RndPixel(), 442 + this.RndPixel());
                     threadmanager[TeamNO - 2].Sendlistboxmessage("正在补给");
                     Thread.Sleep(1000 + this.RndTime());
                 }
+                actioneevent.MOUSEMOVE(GameHwnd, 120, 120);
                 SelectAll = actioneevent.GetPixelColor(GameHwnd, 120, 120);
-                if (SelectAll == "B1C0D0")
+                if (SelectAll == "87959B")
                 {
                     i = 1;
                 }
