@@ -220,7 +220,7 @@ namespace KancolleMacro
             ApplySupply(1);
             threadmanager[TeamNO - 2].Sendlistboxmessage("补给1队完成");
 
-            Thread.Sleep(500 + this.RndTime());
+            Thread.Sleep(250 + this.RndTime());
             //补给2队
             if(convarible.Team_GO[0] == true && convarible.TeamSupply[0] == true)
             {
@@ -262,7 +262,7 @@ namespace KancolleMacro
                 String SelectAll;
                 Thread.Sleep(200 + this.RndTime());
                 actioneevent.MOUSEMOVE(GameHwnd, 120, 120);
-                Thread.Sleep(200 + this.RndTime());
+                Thread.Sleep(500 + this.RndTime());
                 SelectAll = actioneevent.GetPixelColor(GameHwnd, 120, 120);
                 if (SelectAll != "87959B")
                 {
