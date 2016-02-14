@@ -219,30 +219,46 @@ namespace KancolleMacro
             actioneevent.LeftClick(GameHwnd, 146 + this.RndPixel(), 118 + this.RndPixel());
             ApplySupply(1);
             threadmanager[TeamNO - 2].Sendlistboxmessage("补给1队完成");
-
-            Thread.Sleep(250 + this.RndTime());
-            //补给2队
+           
+            //补给2队           
             if(convarible.Team_GO[0] == true && convarible.TeamSupply[0] == true)
             {
-                actioneevent.LeftClick(GameHwnd, 176 + this.RndPixel(), 118 + this.RndPixel());
+                Thread.Sleep(250 + this.RndTime());                
+                threadmanager[TeamNO - 2].Sendtimemessage("overstart");
+                while (actioneevent.GetPixelColor(GameHwnd, 182, 118) != "A1A023" 
+                    && actioneevent.GetPixelColor(GameHwnd, 182, 118) != "A0A935")
+                {
+                    actioneevent.LeftClick(GameHwnd, 182 + (this.RndPixel() / 2), 118 + (this.RndPixel() / 2)); 
+                }
+                threadmanager[TeamNO - 2].Sendtimemessage("overstop");
                 ApplySupply(2);
                 threadmanager[TeamNO - 2].Sendlistboxmessage("补给2队完成");
             }
             
-            Thread.Sleep(250 + this.RndTime());
             //补给3队
             if (convarible.Team_GO[1] == true && convarible.TeamSupply[1] == true)
             {
-                actioneevent.LeftClick(GameHwnd, 206 + this.RndPixel(), 118 + this.RndPixel());
+                Thread.Sleep(250 + this.RndTime());
+                threadmanager[TeamNO - 2].Sendtimemessage("overstart");
+                while(actioneevent.GetPixelColor(GameHwnd, 206, 118) != "ADAD53")
+                {
+                    actioneevent.LeftClick(GameHwnd, 206 + (this.RndPixel() / 2), 118 + (this.RndPixel() / 2));
+                }
+                threadmanager[TeamNO - 2].Sendtimemessage("overstop");
                 ApplySupply(3);
                 threadmanager[TeamNO - 2].Sendlistboxmessage("补给3队完成");
             }
             
-            Thread.Sleep(250 + this.RndTime());
             //补给4队
             if (convarible.Team_GO[2] == true && convarible.TeamSupply[2] == true)
             {
-                actioneevent.LeftClick(GameHwnd, 236 + this.RndPixel(), 118 + this.RndPixel());
+                Thread.Sleep(250 + this.RndTime());
+                threadmanager[TeamNO - 2].Sendtimemessage("overstart");
+                while (actioneevent.GetPixelColor(GameHwnd, 236, 118) != "BEBF86")
+                {
+                    actioneevent.LeftClick(GameHwnd, 236 + (this.RndPixel() / 2), 118 + (this.RndPixel() / 2));
+                }
+                threadmanager[TeamNO - 2].Sendtimemessage("overstop");
                 ApplySupply(4);
                 threadmanager[TeamNO - 2].Sendlistboxmessage("补给4队完成");
             }
@@ -262,18 +278,18 @@ namespace KancolleMacro
                 String SelectAll;
                 Thread.Sleep(200 + this.RndTime());
                 actioneevent.MOUSEMOVE(GameHwnd, 120, 120);
-                Thread.Sleep(500 + this.RndTime());
+                Thread.Sleep(250 + this.RndTime());
                 SelectAll = actioneevent.GetPixelColor(GameHwnd, 120, 120);
                 if (SelectAll != "87959B")
                 {
-                    actioneevent.LeftClick(GameHwnd, 120 + this.RndPixel(), 120 + this.RndPixel());
+                    actioneevent.LeftClick(GameHwnd, 120 + (this.RndPixel() / 2), 120 + (this.RndPixel() / 2));
                     //Thread.Sleep(200 + this.RndTime());
                     //actioneevent.LeftClick(GameHwnd, 695 + this.RndPixel(), 442 + this.RndPixel());
                     threadmanager[TeamNO - 2].Sendlistboxmessage("正在补给");
                     Thread.Sleep(1000 + this.RndTime());
                 }               
                 actioneevent.MOUSEMOVE(GameHwnd, 120, 120);
-                Thread.Sleep(500 + this.RndTime());
+                Thread.Sleep(250 + this.RndTime());
                 SelectAll = actioneevent.GetPixelColor(GameHwnd, 120, 120);
                 if (SelectAll == "87959B")
                 {

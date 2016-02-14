@@ -57,9 +57,9 @@ namespace KancolleMacro
             int width = windowRect.right - windowRect.left + convarible.poiXcorrect;
             int height = windowRect.bottom - windowRect.top;
             IntPtr hdcDest = GDI32.CreateCompatibleDC(hdcSrc);
-            IntPtr hBitmap = GDI32.CreateCompatibleBitmap(hdcSrc, width, height);
+            IntPtr hBitmap = GDI32.CreateCompatibleBitmap(hdcSrc, 800, 480);
             IntPtr hOld = GDI32.SelectObject(hdcDest, hBitmap);
-            GDI32.BitBlt(hdcDest, 0, 0, 800, 480, hdcSrc, 0, convarible.poiYcorrect, GDI32.SRCCOPY);
+            GDI32.BitBlt(hdcDest, 0, 0, 800, 480, hdcSrc, 0, 0, GDI32.SRCCOPY);
             GDI32.SelectObject(hdcDest, hOld);
             GDI32.DeleteDC(hdcDest);
             User32.ReleaseDC(hWnd, hdcSrc);
