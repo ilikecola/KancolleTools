@@ -273,7 +273,8 @@ namespace KancolleMacro
 
         private void ApplySupply(int number){
             threadmanager[TeamNO - 2].Sendtimemessage("overstart");
-            for (int i = 0; i == 0; )
+            int i = 0;
+            while (i == 0 )
             {
                 String SelectAll;
                 actioneevent.MOUSEMOVE(GameHwnd, 0, 0);
