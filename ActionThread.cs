@@ -276,7 +276,8 @@ namespace KancolleMacro
             for (int i = 0; i == 0; )
             {
                 String SelectAll;
-                Thread.Sleep(200 + this.RndTime());
+                actioneevent.MOUSEMOVE(GameHwnd, 0, 0);
+                Thread.Sleep(100 + this.RndTime());
                 actioneevent.MOUSEMOVE(GameHwnd, 120, 120);
                 Thread.Sleep(250 + this.RndTime());
                 SelectAll = actioneevent.GetPixelColor(GameHwnd, 120, 120);
@@ -287,11 +288,19 @@ namespace KancolleMacro
                     //actioneevent.LeftClick(GameHwnd, 695 + this.RndPixel(), 442 + this.RndPixel());
                     threadmanager[TeamNO - 2].Sendlistboxmessage("正在补给");
                     Thread.Sleep(1000 + this.RndTime());
-                }               
+                }
+                actioneevent.MOUSEMOVE(GameHwnd, 0, 0);
+                Thread.Sleep(100 + this.RndTime());
                 actioneevent.MOUSEMOVE(GameHwnd, 120, 120);
                 Thread.Sleep(250 + this.RndTime());
                 SelectAll = actioneevent.GetPixelColor(GameHwnd, 120, 120);
-                if (SelectAll == "87959B")
+                if (SelectAll == "87959B"//120,120
+                    && actioneevent.GetPixelColor(GameHwnd,120,165) != "000000" //120,165
+                    && actioneevent.GetPixelColor(GameHwnd,120,220) != "000000"//120,220
+                    && actioneevent.GetPixelColor(GameHwnd,120,270) != "000000"//120,270
+                    && actioneevent.GetPixelColor(GameHwnd, 120, 320) != "000000"//120,320
+                    && actioneevent.GetPixelColor(GameHwnd, 120, 375) != "000000"//120,375
+                    && actioneevent.GetPixelColor(GameHwnd, 120, 425) != "000000")//120,425
                 {
                     i = 1;
                 }

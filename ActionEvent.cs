@@ -25,6 +25,7 @@ namespace KancolleMacro
         {
             //y为高16位
             //x为低16位
+            Thread.Sleep(5 + RndTime());
             yPos = yPos + convarible.poiYcorrect;
             PostMessage(hWnd, WM_MOUSEMOVE, 0, (yPos << 16) | xPos);
             Thread.Sleep(5 + RndTime());
