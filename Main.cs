@@ -247,7 +247,7 @@ namespace KancolleMacro
             for (i = 0;i<200;i++)
             {
                 string PixelColor = actioneevent.GetPixelColor(hWnd, 650, 0 + i);
-                if (PixelColor != "2F2F2F" )
+                if (PixelColor != "2F2F2F" && PixelColor != "292929")
                 {
                     correct[0] = i;
                     correct[1] = 1;

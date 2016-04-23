@@ -41,7 +41,7 @@
                                         };
             Team_index = new int[3];
             Team_GO = new bool[3];
-            TeamSupply = new bool[3];
+            TeamSupply = new bool[3] {true,true,true};
             Threadflag = new bool[3]{false,false,false};
 
         }

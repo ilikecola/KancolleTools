@@ -208,7 +208,8 @@ namespace KancolleMacro
             while(b){
                 //当不在补给界面持续等待
                 CheckApply = actioneevent.GetPixelColor(GameHwnd, 745, 118);
-                if(CheckApply == "007FC9"){
+                if(CheckApply == "007FC9")
+                {
                     b = false;
                 }
                 Thread.Sleep(200 + this.RndTime());
