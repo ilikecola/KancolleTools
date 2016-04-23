@@ -60,7 +60,8 @@ namespace KancolleMacro
 
             Gohome();
             threadmanager[TeamNO - 2].Sendlistboxmessage("准备开始补给");
-            while(convarible.NeedSupply == true){
+            while(convarible.TeamSupply[0] == true || convarible.TeamSupply[1] == true || convarible.TeamSupply[2] == true)
+            {
                 Thread.Sleep(200 + this.RndTime());
                 GoSupply();
             }
@@ -265,7 +266,7 @@ namespace KancolleMacro
            
             Thread.Sleep(250 + this.RndTime());
 
-            convarible.NeedSupply = false;
+//          convarible.NeedSupply = false;
             threadmanager[TeamNO - 2].Sendlistboxmessage("补给完成");
             threadmanager[TeamNO - 2].Sendlabelmessage("补给完成");
             Gohome();
