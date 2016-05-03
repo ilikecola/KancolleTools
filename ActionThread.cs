@@ -40,7 +40,8 @@ namespace KancolleMacro
         {
             bool a = true;
             while(a){
-                if(TeamNO == 2){
+                Thread.Sleep(500 + this.RndTime());
+                if (TeamNO == 2){
                     a = convarible.Threadflag[1] || convarible.Threadflag[2];
                     if (a == false) break;
                 }else if(TeamNO == 3){
@@ -51,16 +52,20 @@ namespace KancolleMacro
                     a = convarible.Threadflag[0] || convarible.Threadflag[1];
                     if (a == false) break;
                 }
-                Thread.Sleep(500);
             }
             convarible.Threadflag[TeamNO - 2] = true;
             threadmanager[TeamNO - 2].Sendlistboxmessage("线程" + (TeamNO - 1) + "已启动");
             threadmanager[TeamNO - 2].Sendlabelmessage("线程" + (TeamNO - 1) + "已启动");
-            convarible.NeedSupply = true;
+            convarible.TeamSupply[TeamNO - 2] = true;
 
             Gohome();
             threadmanager[TeamNO - 2].Sendlistboxmessage("准备开始补给");
-            while(convarible.TeamSupply[0] == true || convarible.TeamSupply[1] == true || convarible.TeamSupply[2] == true)
+            //while(convarible.TeamSupply[0] == true || convarible.TeamSupply[1] == true || convarible.TeamSupply[2] == true)
+            //{
+            //    Thread.Sleep(200 + this.RndTime());
+            //    GoSupply();
+            //}
+            while (convarible.TeamSupply[TeamNO - 2] == true)
             {
                 Thread.Sleep(200 + this.RndTime());
                 GoSupply();
@@ -217,57 +222,79 @@ namespace KancolleMacro
             threadmanager[TeamNO - 2].Sendtimemessage("overstop");
 
             threadmanager[TeamNO - 2].Sendlistboxmessage("进入补给成功");
-            //补给1队
-            actioneevent.LeftClick(GameHwnd, 146 + this.RndPixel(), 118 + this.RndPixel());
-            ApplySupply(1);
-            threadmanager[TeamNO - 2].Sendlistboxmessage("补给1队完成");
-           
+            ////补给1队
+            //actioneevent.LeftClick(GameHwnd, 145 + this.RndPixel(), 118 + this.RndPixel());
+            //ApplySupply(1);
+            //threadmanager[TeamNO - 2].Sendlistboxmessage("补给1队完成");
+
+
+            //Team1 145,118   
+            //Team2 182,118
+            //Team3 
+            //
+            //
             //补给2队           
-            if(convarible.Team_GO[0] == true && convarible.TeamSupply[0] == true)
+            if(convarible.Team_GO[TeamNO - 2] == true && convarible.TeamSupply[TeamNO - 2] == true)
             {
+
                 Thread.Sleep(250 + this.RndTime());                
                 threadmanager[TeamNO - 2].Sendtimemessage("overstart");
-                while (actioneevent.GetPixelColor(GameHwnd, 182, 118) != "A1A023" 
-                    && actioneevent.GetPixelColor(GameHwnd, 182, 118) != "A0A935")
+                string previous = actioneevent.GetPixelColor(GameHwnd, 145 + 30 * (TeamNO - 2), 118);
+                do
                 {
-                    actioneevent.LeftClick(GameHwnd, 182 + (this.RndPixel() / 2), 118 + (this.RndPixel() / 2)); 
-                }
+                    actioneevent.LeftClick(GameHwnd, 145 + 30 * (TeamNO - 1) + (this.RndPixel() / 2), 118 + (this.RndPixel() / 2));
+                }while (actioneevent.GetPixelColor(GameHwnd, 145, 118) == previous);
                 threadmanager[TeamNO - 2].Sendtimemessage("overstop");
-                ApplySupply(2);
-                threadmanager[TeamNO - 2].Sendlistboxmessage("补给2队完成");
+                ApplySupply(TeamNO);
+                threadmanager[TeamNO - 2].Sendlistboxmessage("补给"+ TeamNO + "队完成");
             }
-            
-            //补给3队
-            if (convarible.Team_GO[1] == true && convarible.TeamSupply[1] == true)
-            {
-                Thread.Sleep(250 + this.RndTime());
-                threadmanager[TeamNO - 2].Sendtimemessage("overstart");
-                while(actioneevent.GetPixelColor(GameHwnd, 206, 118) != "ADAD53")
-                {
-                    actioneevent.LeftClick(GameHwnd, 206 + (this.RndPixel() / 2), 118 + (this.RndPixel() / 2));
-                }
-                threadmanager[TeamNO - 2].Sendtimemessage("overstop");
-                ApplySupply(3);
-                threadmanager[TeamNO - 2].Sendlistboxmessage("补给3队完成");
-            }
-            
-            //补给4队
-            if (convarible.Team_GO[2] == true && convarible.TeamSupply[2] == true)
-            {
-                Thread.Sleep(250 + this.RndTime());
-                threadmanager[TeamNO - 2].Sendtimemessage("overstart");
-                while (actioneevent.GetPixelColor(GameHwnd, 236, 118) != "BEBF86")
-                {
-                    actioneevent.LeftClick(GameHwnd, 236 + (this.RndPixel() / 2), 118 + (this.RndPixel() / 2));
-                }
-                threadmanager[TeamNO - 2].Sendtimemessage("overstop");
-                ApplySupply(4);
-                threadmanager[TeamNO - 2].Sendlistboxmessage("补给4队完成");
-            }
-           
-            Thread.Sleep(250 + this.RndTime());
 
-//          convarible.NeedSupply = false;
+            ////补给2队           
+            //if(convarible.Team_GO[0] == true && convarible.TeamSupply[0] == true)
+            //{
+            //    Thread.Sleep(250 + this.RndTime());                
+            //    threadmanager[TeamNO - 2].Sendtimemessage("overstart");
+            //    while (actioneevent.GetPixelColor(GameHwnd, 182, 118) != "A1A023" 
+            //        && actioneevent.GetPixelColor(GameHwnd, 182, 118) != "A0A935")
+            //    {
+            //        actioneevent.LeftClick(GameHwnd, 182 + (this.RndPixel() / 2), 118 + (this.RndPixel() / 2)); 
+            //    }
+            //    threadmanager[TeamNO - 2].Sendtimemessage("overstop");
+            //    ApplySupply(2);
+            //    threadmanager[TeamNO - 2].Sendlistboxmessage("补给2队完成");
+            //}
+
+            ////补给3队
+            //if (convarible.Team_GO[1] == true && convarible.TeamSupply[1] == true)
+            //{
+            //    Thread.Sleep(250 + this.RndTime());
+            //    threadmanager[TeamNO - 2].Sendtimemessage("overstart");
+            //    while(actioneevent.GetPixelColor(GameHwnd, 206, 118) != "ADAD53")
+            //    {
+            //        actioneevent.LeftClick(GameHwnd, 206 + (this.RndPixel() / 2), 118 + (this.RndPixel() / 2));
+            //    }
+            //    threadmanager[TeamNO - 2].Sendtimemessage("overstop");
+            //    ApplySupply(3);
+            //    threadmanager[TeamNO - 2].Sendlistboxmessage("补给3队完成");
+            //}
+
+            ////补给4队
+            //if (convarible.Team_GO[2] == true && convarible.TeamSupply[2] == true)
+            //{
+            //    Thread.Sleep(250 + this.RndTime());
+            //    threadmanager[TeamNO - 2].Sendtimemessage("overstart");
+            //    while (actioneevent.GetPixelColor(GameHwnd, 236, 118) != "BEBF86")
+            //    {
+            //        actioneevent.LeftClick(GameHwnd, 236 + (this.RndPixel() / 2), 118 + (this.RndPixel() / 2));
+            //    }
+            //    threadmanager[TeamNO - 2].Sendtimemessage("overstop");
+            //    ApplySupply(4);
+            //    threadmanager[TeamNO - 2].Sendlistboxmessage("补给4队完成");
+            //}
+
+            //Thread.Sleep(250 + this.RndTime());
+
+            //          convarible.NeedSupply = false;
             threadmanager[TeamNO - 2].Sendlistboxmessage("补给完成");
             threadmanager[TeamNO - 2].Sendlabelmessage("补给完成");
             Gohome();
@@ -278,42 +305,83 @@ namespace KancolleMacro
             int i = 0;
             while (i == 0 )
             {
-                String SelectAll;
-                actioneevent.MOUSEMOVE(GameHwnd, 0, 0);
+                //Preload
+                string _selectall = actioneevent.GetPixelColor(GameHwnd, 120, 120);
+                string _select1 = actioneevent.GetPixelColor(GameHwnd, 120, 165);
+                string _select2 = actioneevent.GetPixelColor(GameHwnd, 120, 220);
+                string _select3 = actioneevent.GetPixelColor(GameHwnd, 120, 270);
+                string _select4 = actioneevent.GetPixelColor(GameHwnd, 120, 320);
+                string _select5 = actioneevent.GetPixelColor(GameHwnd, 120, 375);
+                string _select6 = actioneevent.GetPixelColor(GameHwnd, 120, 425);
+
+                //判断有多少船需要补给
+                if (_select2 != _select1)
+                {
+                    _select2 = _select2 + "pass";
+                    _select3 = _select3 + "pass";
+                    _select4 = _select4 + "pass";
+                    _select5 = _select5 + "pass";
+                    _select6 = _select6 + "pass";
+                }
+                else if (_select3 != _select2)
+                {
+                    _select3 = _select3 + "pass";
+                    _select4 = _select4 + "pass";
+                    _select5 = _select5 + "pass";
+                    _select6 = _select6 + "pass";
+                }else if (_select4 != _select3)
+                {
+                    _select4 = _select4 + "pass";
+                    _select5 = _select5 + "pass";
+                    _select6 = _select6 + "pass";
+                }
+                else if (_select5 != _select4)
+                {
+                    _select5 = _select5 + "pass";
+                    _select6 = _select6 + "pass";
+                }
+                else if (_select6 != _select5)
+                {
+                    _select6 = _select6 + "pass";
+                }
+
+                string SelectAll;
+                actioneevent.MOUSEMOVE(GameHwnd, 0 + this.RndPixel(), 0 + this.RndPixel());
                 Thread.Sleep(100 + this.RndTime());
-                actioneevent.MOUSEMOVE(GameHwnd, 120, 120);
-                Thread.Sleep(250 + this.RndTime());
+                actioneevent.MOUSEMOVE(GameHwnd, 120 + (this.RndPixel() / 2), 120 + (this.RndPixel() / 2));
+                Thread.Sleep(500 + this.RndTime());
                 SelectAll = actioneevent.GetPixelColor(GameHwnd, 120, 120);
-                if (SelectAll != "87959B")
+                if (SelectAll != _selectall)
                 {
                     actioneevent.LeftClick(GameHwnd, 120 + (this.RndPixel() / 2), 120 + (this.RndPixel() / 2));
                     //Thread.Sleep(200 + this.RndTime());
                     //actioneevent.LeftClick(GameHwnd, 695 + this.RndPixel(), 442 + this.RndPixel());
                     threadmanager[TeamNO - 2].Sendlistboxmessage("正在补给");
                     Thread.Sleep(1000 + this.RndTime());
+                }else
+                {
+                    i = 1;
+                    break;
                 }
-                actioneevent.MOUSEMOVE(GameHwnd, 0, 0);
+                actioneevent.MOUSEMOVE(GameHwnd, 0 + this.RndPixel(), 0 + this.RndPixel());
                 Thread.Sleep(100 + this.RndTime());
-                actioneevent.MOUSEMOVE(GameHwnd, 120, 120);
+                _selectall = actioneevent.GetPixelColor(GameHwnd, 120, 120);
+                actioneevent.MOUSEMOVE(GameHwnd, 120 + this.RndPixel(), 120 + this.RndPixel());
                 Thread.Sleep(250 + this.RndTime());
                 SelectAll = actioneevent.GetPixelColor(GameHwnd, 120, 120);
-                if (SelectAll == "87959B"//120,120
-                    && actioneevent.GetPixelColor(GameHwnd,120,165) != "000000" //120,165
-                    && actioneevent.GetPixelColor(GameHwnd,120,220) != "000000"//120,220
-                    && actioneevent.GetPixelColor(GameHwnd,120,270) != "000000"//120,270
-                    && actioneevent.GetPixelColor(GameHwnd, 120, 320) != "000000"//120,320
-                    && actioneevent.GetPixelColor(GameHwnd, 120, 375) != "000000"//120,375
-                    && actioneevent.GetPixelColor(GameHwnd, 120, 425) != "000000")//120,425
+                if (SelectAll == _selectall ||(//120,120
+                    actioneevent.GetPixelColor(GameHwnd,120,165) != _select1 //120,165
+                    && actioneevent.GetPixelColor(GameHwnd,120,220) != _select2//120,220
+                    && actioneevent.GetPixelColor(GameHwnd,120,270) != _select3//120,270
+                    && actioneevent.GetPixelColor(GameHwnd, 120, 320) != _select4//120,320
+                    && actioneevent.GetPixelColor(GameHwnd, 120, 375) != _select5//120,375
+                    && actioneevent.GetPixelColor(GameHwnd, 120, 425) != _select6))//120,425
                 {
                     i = 1;
                 }
             }
-            if (number > 1)
-            {
-                convarible.TeamSupply[number - 2] = false;
-            }
-
             threadmanager[TeamNO - 2].Sendtimemessage("overstop");
+            convarible.TeamSupply[number - 2] = false;
         }
 
         private void GoExpedition()
