@@ -305,60 +305,60 @@ namespace KancolleMacro
         private void ApplySupply(int number){
             threadmanager[TeamNO - 2].Sendtimemessage("overstart");
             int i = 0;
-            while (i == 0 )
+            string SelectAll;
+            //Preload
+            string _selectall = actioneevent.GetPixelColor(GameHwnd, 120, 120);
+            string _select1 = actioneevent.GetPixelColor(GameHwnd, 120, 165);
+            string _select2 = actioneevent.GetPixelColor(GameHwnd, 120, 220);
+            string _select3 = actioneevent.GetPixelColor(GameHwnd, 120, 270);
+            string _select4 = actioneevent.GetPixelColor(GameHwnd, 120, 320);
+            string _select5 = actioneevent.GetPixelColor(GameHwnd, 120, 375);
+            string _select6 = actioneevent.GetPixelColor(GameHwnd, 120, 425);
+
+            //判断有多少船需要补给
+            int num;
+            if (_select2 != _select1)
             {
-                //Preload
-                string _selectall = actioneevent.GetPixelColor(GameHwnd, 120, 120);
-                string _select1 = actioneevent.GetPixelColor(GameHwnd, 120, 165);
-                string _select2 = actioneevent.GetPixelColor(GameHwnd, 120, 220);
-                string _select3 = actioneevent.GetPixelColor(GameHwnd, 120, 270);
-                string _select4 = actioneevent.GetPixelColor(GameHwnd, 120, 320);
-                string _select5 = actioneevent.GetPixelColor(GameHwnd, 120, 375);
-                string _select6 = actioneevent.GetPixelColor(GameHwnd, 120, 425);
+                _select2 = _select2 + "pass";
+                _select3 = _select3 + "pass";
+                _select4 = _select4 + "pass";
+                _select5 = _select5 + "pass";
+                _select6 = _select6 + "pass";
+                num = 1;
+            }
+            else if (_select3 != _select2)
+            {
+                _select3 = _select3 + "pass";
+                _select4 = _select4 + "pass";
+                _select5 = _select5 + "pass";
+                _select6 = _select6 + "pass";
+                num = 2;
+            }
+            else if (_select4 != _select3)
+            {
+                _select4 = _select4 + "pass";
+                _select5 = _select5 + "pass";
+                _select6 = _select6 + "pass";
+                num = 3;
+            }
+            else if (_select5 != _select4)
+            {
+                _select5 = _select5 + "pass";
+                _select6 = _select6 + "pass";
+                num = 4;
+            }
+            else if (_select6 != _select5)
+            {
+                _select6 = _select6 + "pass";
+                num = 5;
 
-                //判断有多少船需要补给
-                int num;
-                if (_select2 != _select1)
-                {
-                    _select2 = _select2 + "pass";
-                    _select3 = _select3 + "pass";
-                    _select4 = _select4 + "pass";
-                    _select5 = _select5 + "pass";
-                    _select6 = _select6 + "pass";
-                    num = 1;
-                }
-                else if (_select3 != _select2)
-                {
-                    _select3 = _select3 + "pass";
-                    _select4 = _select4 + "pass";
-                    _select5 = _select5 + "pass";
-                    _select6 = _select6 + "pass";
-                    num = 2;
-                }
-                else if (_select4 != _select3)
-                {
-                    _select4 = _select4 + "pass";
-                    _select5 = _select5 + "pass";
-                    _select6 = _select6 + "pass";
-                    num = 3;
-                }
-                else if (_select5 != _select4)
-                {
-                    _select5 = _select5 + "pass";
-                    _select6 = _select6 + "pass";
-                    num = 4;
-                }
-                else if (_select6 != _select5)
-                {
-                    _select6 = _select6 + "pass";
-                    num = 5;
-
-                }else
-                {
-                    num = 6;
-                }
-
-                string SelectAll;
+            }
+            else
+            {
+                num = 6;
+            }
+            while (i == 0 )
+            {           
                 actioneevent.MOUSEMOVE(GameHwnd, 0 + this.RndPixel(), 0 + this.RndPixel());
                 Thread.Sleep(100 + this.RndTime());
                 actioneevent.MOUSEMOVE(GameHwnd, 120 + (this.RndPixel() / 2), 120 + (this.RndPixel() / 2));
