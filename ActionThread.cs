@@ -302,22 +302,52 @@ namespace KancolleMacro
             Gohome();
         }
 
-        private void ApplySupply(int number){
-            threadmanager[TeamNO - 2].Sendtimemessage("overstart");
+        private void ApplySupply(int number){            
             int i = 0;
             string SelectAll;
+            string _selectall;
+            string _select1;
+            string _select2;
+            string _select3;
+            string _select4;
+            string _select5;
+            string _select6;
+            string select1;
+            string select2;
+            string select3;
+            string select4;
+            string select5;
+            string select6;
             //Preload
-            string _selectall = actioneevent.GetPixelColor(GameHwnd, 120, 120);
-            string _select1 = actioneevent.GetPixelColor(GameHwnd, 120, 165);
-            string _select2 = actioneevent.GetPixelColor(GameHwnd, 120, 220);
-            string _select3 = actioneevent.GetPixelColor(GameHwnd, 120, 270);
-            string _select4 = actioneevent.GetPixelColor(GameHwnd, 120, 320);
-            string _select5 = actioneevent.GetPixelColor(GameHwnd, 120, 375);
-            string _select6 = actioneevent.GetPixelColor(GameHwnd, 120, 425);
+            _selectall = actioneevent.GetPixelColor(GameHwnd, 120, 120);
+            _select1 = actioneevent.GetPixelColor(GameHwnd, 120, 165);
+            _select2 = actioneevent.GetPixelColor(GameHwnd, 120, 220);
+            _select3 = actioneevent.GetPixelColor(GameHwnd, 120, 270);
+            _select4 = actioneevent.GetPixelColor(GameHwnd, 120, 320);
+            _select5 = actioneevent.GetPixelColor(GameHwnd, 120, 375);
+            _select6 = actioneevent.GetPixelColor(GameHwnd, 120, 425);
+            threadmanager[TeamNO - 2].Sendlistboxmessage(_selectall);
+            threadmanager[TeamNO - 2].Sendlistboxmessage(_select1);
+            threadmanager[TeamNO - 2].Sendlistboxmessage(_select2);
+            threadmanager[TeamNO - 2].Sendlistboxmessage(_select3);
+            threadmanager[TeamNO - 2].Sendlistboxmessage(_select4);
+            threadmanager[TeamNO - 2].Sendlistboxmessage(_select5);
+            threadmanager[TeamNO - 2].Sendlistboxmessage(_select6);
 
             //判断有多少船需要补给
-            int num;
-            if (_select2 != _select1)
+            int num = -1;
+            if (_selectall == "87959B"
+                &&_select1 == "C1D1E2" 
+                && _select2 == "B9C8DA"
+                && _select3 == "B8CCDE"
+                && _select4 == "C1D0E0"
+                && _select5 == "D7E3EB"
+                && _select6 == "CDDBE3")
+            {
+                i = 1;
+                convarible.TeamSupply[number - 2] = false;
+            }
+            else if (_select2 != _select1)
             {
                 _select2 = _select2 + "pass";
                 _select3 = _select3 + "pass";
@@ -357,6 +387,8 @@ namespace KancolleMacro
             {
                 num = 6;
             }
+
+            threadmanager[TeamNO - 2].Sendtimemessage("overstart");
             while (i == 0 )
             {           
                 actioneevent.MOUSEMOVE(GameHwnd, 0 + this.RndPixel(), 0 + this.RndPixel());
@@ -371,17 +403,29 @@ namespace KancolleMacro
                     //actioneevent.LeftClick(GameHwnd, 695 + this.RndPixel(), 442 + this.RndPixel());
                     threadmanager[TeamNO - 2].Sendlistboxmessage("正在补给");
                     Thread.Sleep(1000 + this.RndTime());
-                }else
-                {
-                    i = 1;
-                    break;
                 }
+
                 actioneevent.MOUSEMOVE(GameHwnd, 0 + this.RndPixel(), 0 + this.RndPixel());
                 Thread.Sleep(100 + this.RndTime());
                 _selectall = actioneevent.GetPixelColor(GameHwnd, 120, 120);
                 actioneevent.MOUSEMOVE(GameHwnd, 120 + this.RndPixel(), 120 + this.RndPixel());
                 Thread.Sleep(250 + this.RndTime());
+
+                //check
                 SelectAll = actioneevent.GetPixelColor(GameHwnd, 120, 120);
+                select1 = actioneevent.GetPixelColor(GameHwnd, 120, 165);
+                select2 = actioneevent.GetPixelColor(GameHwnd, 120, 220);
+                select3 = actioneevent.GetPixelColor(GameHwnd, 120, 270);
+                select4 = actioneevent.GetPixelColor(GameHwnd, 120, 320);
+                select5 = actioneevent.GetPixelColor(GameHwnd, 120, 375);
+                select6 = actioneevent.GetPixelColor(GameHwnd, 120, 425);
+                threadmanager[TeamNO - 2].Sendlistboxmessage(SelectAll);
+                threadmanager[TeamNO - 2].Sendlistboxmessage(select1);
+                threadmanager[TeamNO - 2].Sendlistboxmessage(select2);
+                threadmanager[TeamNO - 2].Sendlistboxmessage(select3);
+                threadmanager[TeamNO - 2].Sendlistboxmessage(select4);
+                threadmanager[TeamNO - 2].Sendlistboxmessage(select5);
+                threadmanager[TeamNO - 2].Sendlistboxmessage(select6);
                 switch (num)
                 {
                     case 1:
@@ -392,50 +436,50 @@ namespace KancolleMacro
                         break;
                     case 2:
                         if (SelectAll == _selectall 
-                            && actioneevent.GetPixelColor(GameHwnd, 120, 165) != _select1
-                            && actioneevent.GetPixelColor(GameHwnd, 120, 220) != _select2)
+                            && select1 != _select1
+                            && select2 != _select2)
                         {
                             i = 1;
                         }
                         break;
                     case 3:
                         if (SelectAll == _selectall
-                            && actioneevent.GetPixelColor(GameHwnd, 120, 165) != _select1
-                            && actioneevent.GetPixelColor(GameHwnd, 120, 220) != _select2
-                            && actioneevent.GetPixelColor(GameHwnd, 120, 270) != _select3)
+                            && select1 != _select1
+                            && select2 != _select2
+                            && select3 != _select3)
                         {
                             i = 1;
                         }
                         break;
                     case 4:
                         if (SelectAll == _selectall
-                            && actioneevent.GetPixelColor(GameHwnd, 120, 165) != _select1
-                            && actioneevent.GetPixelColor(GameHwnd, 120, 220) != _select2
-                            && actioneevent.GetPixelColor(GameHwnd, 120, 270) != _select3
-                            && actioneevent.GetPixelColor(GameHwnd, 120, 320) != _select4)
+                            && select1 != _select1
+                            && select2 != _select2
+                            && select3 != _select3
+                            && select4 != _select4)
                         {
                             i = 1;
                         }
                         break;
                     case 5:
                         if (SelectAll == _selectall
-                            && actioneevent.GetPixelColor(GameHwnd, 120, 165) != _select1
-                            && actioneevent.GetPixelColor(GameHwnd, 120, 220) != _select2
-                            && actioneevent.GetPixelColor(GameHwnd, 120, 270) != _select3
-                            && actioneevent.GetPixelColor(GameHwnd, 120, 320) != _select4
-                            && actioneevent.GetPixelColor(GameHwnd, 120, 375) != _select5)
+                            && select1 != _select1
+                            && select2 != _select2
+                            && select3 != _select3
+                            && select4 != _select4
+                            && select5 != _select5)
                         {
                             i = 1;
                         }
                         break;
                     case 6:
                         if (SelectAll == _selectall
-                            && actioneevent.GetPixelColor(GameHwnd, 120, 165) != _select1
-                            && actioneevent.GetPixelColor(GameHwnd, 120, 220) != _select2
-                            && actioneevent.GetPixelColor(GameHwnd, 120, 270) != _select3
-                            && actioneevent.GetPixelColor(GameHwnd, 120, 320) != _select4
-                            && actioneevent.GetPixelColor(GameHwnd, 120, 375) != _select5
-                            && actioneevent.GetPixelColor(GameHwnd, 120, 425) != _select6)
+                            && select1 != _select1
+                            && select2 != _select2
+                            && select3 != _select3
+                            && select4 != _select4
+                            && select5 != _select5
+                            && select6 != _select6)
                         {
                             i = 1;
                         }

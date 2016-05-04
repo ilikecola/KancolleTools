@@ -44,14 +44,15 @@ namespace KancolleMacro
         public ThreadManager[] threadmanager = new ThreadManager[3];
 
         //窗口相关
+        IntPtr ParentGamehWnd = new IntPtr(0);
         IntPtr GamehWnd= new IntPtr(0);
         IntPtr KCVhWnd = new IntPtr(0);
         IntPtr POIhWnd = new IntPtr(0);
         IntPtr _74hWnd = new IntPtr(0);
         int Gamewidth = 0; //窗口的宽度
         int Gameheight = 0; //窗口的高度
-        int KCVposX;
-        int KCVposY;
+        int ParentGamehWndposX;
+        int ParentGamehWndposY;
         //系统时间
         DateTime currentTime = new DateTime();
         string currentTimestr;
@@ -222,6 +223,7 @@ namespace KancolleMacro
                 if (correct[1] == 1)
                 {                    
                     convarible.poiYcorrect = correct[0];
+                    ParentGamehWnd = POIhWnd;
                     GamehWnd = childHwnd;
                     label22.Text = GamehWnd.ToString();
                     label62.Text = GamehWnd.ToString();
@@ -886,19 +888,19 @@ namespace KancolleMacro
         private void button3_Click(object sender, EventArgs e)
         {
             RECT rc = new RECT();
-            GetWindowRect(KCVhWnd, ref rc);
-            KCVposX = rc.Left;
-            KCVposY = rc.Top;
+            GetWindowRect(ParentGamehWnd, ref rc);
+            ParentGamehWndposX = rc.Left;
+            ParentGamehWndposY = rc.Top;
             int screenWidth = Screen.PrimaryScreen.Bounds.Width;
             int screenHeight = Screen.PrimaryScreen.Bounds.Height;
             const int SWP_NOSIZE = 0x0001;
-            SetWindowPos(KCVhWnd, (IntPtr)(0), screenHeight, screenWidth, 0, 0, SWP_NOSIZE);
+            SetWindowPos(ParentGamehWnd, (IntPtr)(0), screenHeight, screenWidth, 0, 0, SWP_NOSIZE);
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
             const int SWP_NOSIZE = 0x0001;
-            SetWindowPos(KCVhWnd, (IntPtr)(0), KCVposX, KCVposY, 0, 0, SWP_NOSIZE);
+            SetWindowPos(ParentGamehWnd, (IntPtr)(0), ParentGamehWndposX, ParentGamehWndposY, 0, 0, SWP_NOSIZE);
         }
 
         private void button7_Click(object sender, EventArgs e)
