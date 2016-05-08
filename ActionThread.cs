@@ -267,11 +267,9 @@ namespace KancolleMacro
                     threadmanager[TeamNO - 2].Sendlistboxmessage("Changecurrent_1:" + changecurrent_1);
                     threadmanager[TeamNO - 2].Sendlistboxmessage("Changecurrent_2:" + changecurrent_2);
                 } while (current_1 == previous_1 
-                        && current_2 == previous_2 
-                        && changecurrent_1 == changeprevious_1 
-                        && changecurrent_2 == changeprevious_2
-                        && changecurrent_1 != current_1
-                        && changecurrent_2 != current_2);
+                        || current_2 == previous_2 
+                        || changecurrent_1 == changeprevious_1 
+                        || changecurrent_2 == changeprevious_2);
                 threadmanager[TeamNO - 2].Sendlistboxmessage("进入补给" + TeamNO + "队完成");
                 threadmanager[TeamNO - 2].Sendtimemessage("overstop");
                 ApplySupply(TeamNO);
@@ -476,7 +474,7 @@ namespace KancolleMacro
                     SelectAll_1 = actioneevent.GetPixelColor(GameHwnd, 120, 120);
                     SelectAll_2 = actioneevent.GetPixelColor(GameHwnd, 115, 120);
                     threadmanager[TeamNO - 2].Sendlistboxmessage("ClickCheckPointCurrent:" + SelectAll_1 + " " + SelectAll_2);
-                } while(SelectAll_1 != _selectall_1 && SelectAll_2 != _selectall_2);
+                } while(SelectAll_1 == _selectall_1 || SelectAll_2 == _selectall_2);
 
                 actioneevent.MOUSEMOVE(GameHwnd, 0 + this.RndPixel(), 0 + this.RndPixel());
                 Thread.Sleep(100 + this.RndTime());
