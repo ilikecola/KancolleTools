@@ -236,16 +236,43 @@ namespace KancolleMacro
             //补给2队           
             if(convarible.Team_GO[TeamNO - 2] == true && convarible.TeamSupply[TeamNO - 2] == true)
             {
+                string current_1 = null;
+                string current_2= null;
+                string changecurrent_1 = null;
+                string changecurrent_2 = null;
+                string previous_1 = null;
+                string previous_2 = null;
+                string changeprevious_1 = null;
+                string changeprevious_2 = null;
 
-                Thread.Sleep(250 + this.RndTime());                
+                Thread.Sleep(250 + this.RndTime());
+                previous_1 = actioneevent.GetPixelColor(GameHwnd, 145, 118);
+                previous_2 = actioneevent.GetPixelColor(GameHwnd, 152, 118);
+                changeprevious_1 = actioneevent.GetPixelColor(GameHwnd, 145 + 30 * (TeamNO - 1), 118);
+                changeprevious_2 = actioneevent.GetPixelColor(GameHwnd, 152 + 30 * (TeamNO - 1), 118);
+                threadmanager[TeamNO - 2].Sendlistboxmessage("Previous_1:" + previous_1);
+                threadmanager[TeamNO - 2].Sendlistboxmessage("Previous_2:" + previous_1);
+                threadmanager[TeamNO - 2].Sendlistboxmessage("Changeprevious_1:" + changeprevious_1);
+                threadmanager[TeamNO - 2].Sendlistboxmessage("Changeprevious_2:" + changeprevious_2);
                 threadmanager[TeamNO - 2].Sendtimemessage("overstart");
-                string previous = actioneevent.GetPixelColor(GameHwnd, 145, 118);
-                string current;
                 do
                 {
-                    actioneevent.LeftClick(GameHwnd, 145 + 30 * (TeamNO - 1) + (this.RndPixel() / 2), 118 + (this.RndPixel() / 2));
-                    current = actioneevent.GetPixelColor(GameHwnd, 145, 118);
-                } while (current == previous);
+                    actioneevent.LeftClick(GameHwnd, 145 + 30 * (TeamNO - 1) + (this.RndPixel() / 5), 118 + (this.RndPixel() / 5));
+                    current_1 = actioneevent.GetPixelColor(GameHwnd, 145, 118);
+                    current_2 = actioneevent.GetPixelColor(GameHwnd, 152, 118);
+                    changecurrent_1 = actioneevent.GetPixelColor(GameHwnd, 145 + 30 * (TeamNO - 1), 118);
+                    changecurrent_2 = actioneevent.GetPixelColor(GameHwnd, 152 + 30 * (TeamNO - 1), 118);
+                    threadmanager[TeamNO - 2].Sendlistboxmessage("Current_1:" + current_1);
+                    threadmanager[TeamNO - 2].Sendlistboxmessage("Current_2:" + current_2);
+                    threadmanager[TeamNO - 2].Sendlistboxmessage("Changecurrent_1:" + changecurrent_1);
+                    threadmanager[TeamNO - 2].Sendlistboxmessage("Changecurrent_2:" + changecurrent_2);
+                } while (current_1 == previous_1 
+                        && current_2 == previous_2 
+                        && changecurrent_1 == changeprevious_1 
+                        && changecurrent_2 == changeprevious_2
+                        && changecurrent_1 != current_1
+                        && changecurrent_2 != current_2);
+                threadmanager[TeamNO - 2].Sendlistboxmessage("进入补给" + TeamNO + "队完成");
                 threadmanager[TeamNO - 2].Sendtimemessage("overstop");
                 ApplySupply(TeamNO);
                 threadmanager[TeamNO - 2].Sendlistboxmessage("补给"+ TeamNO + "队完成");
@@ -302,84 +329,120 @@ namespace KancolleMacro
             Gohome();
         }
 
-        private void ApplySupply(int number){            
-            int i = 0;
-            string SelectAll;
-            string _selectall;
-            string _select1;
-            string _select2;
-            string _select3;
-            string _select4;
-            string _select5;
-            string _select6;
-            string select1;
-            string select2;
-            string select3;
-            string select4;
-            string select5;
-            string select6;
+        private void ApplySupply(int number){
+            int i;
+            
+            string _selectall_1 = null;
+            string _selectall_2 = null;
+            string _select1_1 = null;
+            string _select1_2 = null;
+            string _select2_1 = null;
+            string _select2_2 = null;
+            string _select3_1 = null;
+            string _select3_2 = null;
+            string _select4_1 = null;
+            string _select4_2 = null;
+            string _select5_1 = null;
+            string _select5_2 = null;
+            string _select6_1 = null;
+            string _select6_2 = null;
+
+            string SelectAll_1 = null;
+            string SelectAll_2 = null;
+            string select1_1 = null;
+            string select1_2 = null;
+            string select2_1 = null;
+            string select2_2 = null;
+            string select3_1 = null;
+            string select3_2 = null;
+            string select4_1 = null;
+            string select4_2 = null;
+            string select5_1 = null;
+            string select5_2 = null;
+            string select6_1 = null;
+            string select6_2 = null;
+
+
             //Preload
-            _selectall = actioneevent.GetPixelColor(GameHwnd, 120, 120);
-            _select1 = actioneevent.GetPixelColor(GameHwnd, 120, 165);
-            _select2 = actioneevent.GetPixelColor(GameHwnd, 120, 220);
-            _select3 = actioneevent.GetPixelColor(GameHwnd, 120, 270);
-            _select4 = actioneevent.GetPixelColor(GameHwnd, 120, 320);
-            _select5 = actioneevent.GetPixelColor(GameHwnd, 120, 375);
-            _select6 = actioneevent.GetPixelColor(GameHwnd, 120, 425);
-            threadmanager[TeamNO - 2].Sendlistboxmessage(_selectall);
-            threadmanager[TeamNO - 2].Sendlistboxmessage(_select1);
-            threadmanager[TeamNO - 2].Sendlistboxmessage(_select2);
-            threadmanager[TeamNO - 2].Sendlistboxmessage(_select3);
-            threadmanager[TeamNO - 2].Sendlistboxmessage(_select4);
-            threadmanager[TeamNO - 2].Sendlistboxmessage(_select5);
-            threadmanager[TeamNO - 2].Sendlistboxmessage(_select6);
+            actioneevent.MOUSEMOVE(GameHwnd, 0 + this.RndPixel(), 0 + this.RndPixel());
+
+            i = 0;
+            _selectall_1 = actioneevent.GetPixelColor(GameHwnd, 120, 120);
+            _select1_1 = actioneevent.GetPixelColor(GameHwnd, 120, 165);
+            _select2_1 = actioneevent.GetPixelColor(GameHwnd, 120, 220);
+            _select3_1 = actioneevent.GetPixelColor(GameHwnd, 120, 270);
+            _select4_1 = actioneevent.GetPixelColor(GameHwnd, 120, 320);
+            _select5_1 = actioneevent.GetPixelColor(GameHwnd, 120, 375);
+            _select6_1 = actioneevent.GetPixelColor(GameHwnd, 120, 425);
+
+            _selectall_2 = actioneevent.GetPixelColor(GameHwnd, 115, 120);
+            _select1_2 = actioneevent.GetPixelColor(GameHwnd, 115, 165);
+            _select2_2 = actioneevent.GetPixelColor(GameHwnd, 115, 220);
+            _select3_2 = actioneevent.GetPixelColor(GameHwnd, 115, 270);
+            _select4_2 = actioneevent.GetPixelColor(GameHwnd, 115, 320);
+            _select5_2 = actioneevent.GetPixelColor(GameHwnd, 115, 375);
+            _select6_2 = actioneevent.GetPixelColor(GameHwnd, 115, 425);
+
+            threadmanager[TeamNO - 2].Sendlistboxmessage("CheckPointPrevious_1:" + _selectall_1 + " " + _selectall_2);
+            threadmanager[TeamNO - 2].Sendlistboxmessage("CheckPointPrevious_2:" + _select1_1 + " " + _select1_2);
+            threadmanager[TeamNO - 2].Sendlistboxmessage("CheckPointPrevious_3:" + _select2_1 + " " + _select2_2);
+            threadmanager[TeamNO - 2].Sendlistboxmessage("CheckPointPrevious_4:" + _select3_1 + " " + _select3_2);
+            threadmanager[TeamNO - 2].Sendlistboxmessage("CheckPointPrevious_5:" + _select4_1 + " " + _select4_2);
+            threadmanager[TeamNO - 2].Sendlistboxmessage("CheckPointPrevious_6:" + _select5_1 + " " + _select5_2);
+            threadmanager[TeamNO - 2].Sendlistboxmessage("CheckPointPrevious_7:" + _select6_1 + " " + _select6_2);
 
             //判断有多少船需要补给
             int num = -1;
-            if (_selectall == "87959B"
-                &&_select1 == "C1D1E2" 
-                && _select2 == "B9C8DA"
-                && _select3 == "B8CCDE"
-                && _select4 == "C1D0E0"
-                && _select5 == "D7E3EB"
-                && _select6 == "CDDBE3")
+            if (_select1_1 == "C1D1E2" 
+                && _select2_1 == "B9C8DA"
+                && _select3_1 == "B8CCDE"
+                && _select4_1 == "C1D0E0"
+                && _select5_1 == "D7E3EB"
+                && _select6_1 == "CDDBE3"
+                && _select1_2 == "BED0E2"
+                && _select2_2 == "BBCBDB"
+                && _select3_2 == "B9CFE0"
+                && _select4_2 == "BBD2E0"
+                && _select5_2 == "D3E2E5"
+                && _select6_2 == "C8DCE1")
             {
+                threadmanager[TeamNO - 2].Sendlistboxmessage(TeamNO + "队已补给");
                 i = 1;
                 convarible.TeamSupply[number - 2] = false;
             }
-            else if (_select2 != _select1)
+            else if (_select2_1 != _select1_1)
             {
-                _select2 = _select2 + "pass";
-                _select3 = _select3 + "pass";
-                _select4 = _select4 + "pass";
-                _select5 = _select5 + "pass";
-                _select6 = _select6 + "pass";
+                _select2_1 = _select2_1 + "pass";
+                _select3_1 = _select3_1 + "pass";
+                _select4_1 = _select4_1 + "pass";
+                _select5_1 = _select5_1 + "pass";
+                _select6_1 = _select6_1 + "pass";
                 num = 1;
             }
-            else if (_select3 != _select2)
+            else if (_select3_1 != _select2_1)
             {
-                _select3 = _select3 + "pass";
-                _select4 = _select4 + "pass";
-                _select5 = _select5 + "pass";
-                _select6 = _select6 + "pass";
+                _select3_1 = _select3_1 + "pass";
+                _select4_1 = _select4_1 + "pass";
+                _select5_1 = _select5_1 + "pass";
+                _select6_1 = _select6_1 + "pass";
                 num = 2;
             }
-            else if (_select4 != _select3)
+            else if (_select4_1 != _select3_1)
             {
-                _select4 = _select4 + "pass";
-                _select5 = _select5 + "pass";
-                _select6 = _select6 + "pass";
+                _select4_1 = _select4_1 + "pass";
+                _select5_1 = _select5_1 + "pass";
+                _select6_1 = _select6_1 + "pass";
                 num = 3;
             }
-            else if (_select5 != _select4)
+            else if (_select5_1 != _select4_1)
             {
-                _select5 = _select5 + "pass";
-                _select6 = _select6 + "pass";
+                _select5_1 = _select5_1 + "pass";
+                _select6_1 = _select6_1 + "pass";
                 num = 4;
             }
-            else if (_select6 != _select5)
+            else if (_select6_1 != _select5_1)
             {
-                _select6 = _select6 + "pass";
+                _select6_1 = _select6_1 + "pass";
                 num = 5;
 
             }
@@ -390,96 +453,143 @@ namespace KancolleMacro
 
             threadmanager[TeamNO - 2].Sendtimemessage("overstart");
             while (i == 0 )
-            {           
-                actioneevent.MOUSEMOVE(GameHwnd, 0 + this.RndPixel(), 0 + this.RndPixel());
-                Thread.Sleep(100 + this.RndTime());
-                actioneevent.MOUSEMOVE(GameHwnd, 120 + (this.RndPixel() / 2), 120 + (this.RndPixel() / 2));
-                Thread.Sleep(500 + this.RndTime());
-                SelectAll = actioneevent.GetPixelColor(GameHwnd, 120, 120);
-                if (SelectAll != _selectall)
+            {
+                //Thread.Sleep(100 + this.RndTime());
+                //actioneevent.MOUSEMOVE(GameHwnd, 120 + (this.RndPixel() / 2), 120 + (this.RndPixel() / 2));
+                //SelectAll_1 = actioneevent.GetPixelColor(GameHwnd, 120, 120);
+                //SelectAll_2 = actioneevent.GetPixelColor(GameHwnd, 115, 120);
+                //threadmanager[TeamNO - 2].Sendlistboxmessage("ClickCheckPoint:" + SelectAll_1 + " " + SelectAll_2);
+                threadmanager[TeamNO - 2].Sendlistboxmessage("ClickCheckPointPrevious:" + _selectall_1 + " " + _selectall_2);
+                do
                 {
+                    Thread.Sleep(20 + this.RndTime());
+                    actioneevent.MOUSEMOVE(GameHwnd, 120 + (this.RndPixel() / 2), 120 + (this.RndPixel() / 2));
+                    Thread.Sleep(20 + this.RndTime());
                     actioneevent.LeftClick(GameHwnd, 120 + (this.RndPixel() / 2), 120 + (this.RndPixel() / 2));
-                    //Thread.Sleep(200 + this.RndTime());
-                    //actioneevent.LeftClick(GameHwnd, 695 + this.RndPixel(), 442 + this.RndPixel());
-                    threadmanager[TeamNO - 2].Sendlistboxmessage("正在补给");
+                    threadmanager[TeamNO - 2].Sendlistboxmessage(TeamNO + "队正在补给");
                     Thread.Sleep(1000 + this.RndTime());
-                }
+
+                    //First Check
+                    actioneevent.MOUSEMOVE(GameHwnd, 0 + this.RndPixel(), 0 + this.RndPixel());
+                    Thread.Sleep(50 + this.RndTime());
+                    actioneevent.MOUSEMOVE(GameHwnd, 120 + (this.RndPixel() / 2), 120 + (this.RndPixel() / 2));
+                    SelectAll_1 = actioneevent.GetPixelColor(GameHwnd, 120, 120);
+                    SelectAll_2 = actioneevent.GetPixelColor(GameHwnd, 115, 120);
+                    threadmanager[TeamNO - 2].Sendlistboxmessage("ClickCheckPointCurrent:" + SelectAll_1 + " " + SelectAll_2);
+                } while(SelectAll_1 != _selectall_1 && SelectAll_2 != _selectall_2);
 
                 actioneevent.MOUSEMOVE(GameHwnd, 0 + this.RndPixel(), 0 + this.RndPixel());
                 Thread.Sleep(100 + this.RndTime());
-                _selectall = actioneevent.GetPixelColor(GameHwnd, 120, 120);
-                actioneevent.MOUSEMOVE(GameHwnd, 120 + this.RndPixel(), 120 + this.RndPixel());
+                _selectall_1 = actioneevent.GetPixelColor(GameHwnd, 120, 120);
+                actioneevent.MOUSEMOVE(GameHwnd, 120 + (this.RndPixel() / 2), 120 + (this.RndPixel() / 2));
                 Thread.Sleep(250 + this.RndTime());
 
                 //check
-                SelectAll = actioneevent.GetPixelColor(GameHwnd, 120, 120);
-                select1 = actioneevent.GetPixelColor(GameHwnd, 120, 165);
-                select2 = actioneevent.GetPixelColor(GameHwnd, 120, 220);
-                select3 = actioneevent.GetPixelColor(GameHwnd, 120, 270);
-                select4 = actioneevent.GetPixelColor(GameHwnd, 120, 320);
-                select5 = actioneevent.GetPixelColor(GameHwnd, 120, 375);
-                select6 = actioneevent.GetPixelColor(GameHwnd, 120, 425);
-                threadmanager[TeamNO - 2].Sendlistboxmessage(SelectAll);
-                threadmanager[TeamNO - 2].Sendlistboxmessage(select1);
-                threadmanager[TeamNO - 2].Sendlistboxmessage(select2);
-                threadmanager[TeamNO - 2].Sendlistboxmessage(select3);
-                threadmanager[TeamNO - 2].Sendlistboxmessage(select4);
-                threadmanager[TeamNO - 2].Sendlistboxmessage(select5);
-                threadmanager[TeamNO - 2].Sendlistboxmessage(select6);
+                SelectAll_1 = actioneevent.GetPixelColor(GameHwnd, 120, 120);
+                select1_1 = actioneevent.GetPixelColor(GameHwnd, 120, 165);
+                select2_1 = actioneevent.GetPixelColor(GameHwnd, 120, 220);
+                select3_1 = actioneevent.GetPixelColor(GameHwnd, 120, 270);
+                select4_1 = actioneevent.GetPixelColor(GameHwnd, 120, 320);
+                select5_1 = actioneevent.GetPixelColor(GameHwnd, 120, 375);
+                select6_1 = actioneevent.GetPixelColor(GameHwnd, 120, 425);
+
+                SelectAll_2 = actioneevent.GetPixelColor(GameHwnd, 115, 120);
+                select1_2 = actioneevent.GetPixelColor(GameHwnd, 115, 165);
+                select2_2 = actioneevent.GetPixelColor(GameHwnd, 115, 220);
+                select3_2 = actioneevent.GetPixelColor(GameHwnd, 115, 270);
+                select4_2 = actioneevent.GetPixelColor(GameHwnd, 115, 320);
+                select5_2 = actioneevent.GetPixelColor(GameHwnd, 115, 375);
+                select6_2 = actioneevent.GetPixelColor(GameHwnd, 115, 425);
+
+                threadmanager[TeamNO - 2].Sendlistboxmessage("CheckPointCurrent_1:" + SelectAll_1 + " " + SelectAll_2);
+                threadmanager[TeamNO - 2].Sendlistboxmessage("CheckPointCurrent_2:" + select1_1 + " " + select1_2);
+                threadmanager[TeamNO - 2].Sendlistboxmessage("CheckPointCurrent_3:" + select2_1 + " " + select2_2);
+                threadmanager[TeamNO - 2].Sendlistboxmessage("CheckPointCurrent_4:" + select3_1 + " " + select3_2);
+                threadmanager[TeamNO - 2].Sendlistboxmessage("CheckPointCurrent_5:" + select4_1 + " " + select4_2);
+                threadmanager[TeamNO - 2].Sendlistboxmessage("CheckPointCurrent_6:" + select5_1 + " " + select5_2);
+                threadmanager[TeamNO - 2].Sendlistboxmessage("CheckPointCurrent_7:" + select6_1 + " " + select6_2);
                 switch (num)
                 {
                     case 1:
-                        if (SelectAll == _selectall && actioneevent.GetPixelColor(GameHwnd, 120, 165) != _select1)
+                        if (SelectAll_1 == _selectall_1 
+                            && SelectAll_2 == _selectall_2 
+                            && select1_1 != _select1_1 
+                            && select1_2 != _select1_2)
                         {
                             i = 1;
                         }
                         break;
                     case 2:
-                        if (SelectAll == _selectall 
-                            && select1 != _select1
-                            && select2 != _select2)
+                        if (SelectAll_1 == _selectall_1 
+                            && select1_1 != _select1_1
+                            && select2_1 != _select2_1
+                            && SelectAll_2 == _selectall_2
+                            && select1_2 != _select1_2
+                            && select2_2 != _select2_2)
                         {
                             i = 1;
                         }
                         break;
                     case 3:
-                        if (SelectAll == _selectall
-                            && select1 != _select1
-                            && select2 != _select2
-                            && select3 != _select3)
+                        if (SelectAll_1 == _selectall_1
+                            && select1_1 != _select1_1
+                            && select2_1 != _select2_1
+                            && select3_1 != _select3_1
+                            && SelectAll_2 == _selectall_2
+                            && select1_2 != _select1_2
+                            && select2_2 != _select2_2
+                            && select3_2 != _select3_2)
                         {
                             i = 1;
                         }
                         break;
                     case 4:
-                        if (SelectAll == _selectall
-                            && select1 != _select1
-                            && select2 != _select2
-                            && select3 != _select3
-                            && select4 != _select4)
+                        if (SelectAll_1 == _selectall_1
+                            && select1_1 != _select1_1
+                            && select2_1 != _select2_1
+                            && select3_1 != _select3_1
+                            && select4_1 != _select4_1
+                            && SelectAll_2 == _selectall_2
+                            && select1_2 != _select1_2
+                            && select2_2 != _select2_2
+                            && select3_2 != _select3_2
+                            && select4_2 != _select4_2)
                         {
                             i = 1;
                         }
                         break;
                     case 5:
-                        if (SelectAll == _selectall
-                            && select1 != _select1
-                            && select2 != _select2
-                            && select3 != _select3
-                            && select4 != _select4
-                            && select5 != _select5)
+                        if (SelectAll_1 == _selectall_1
+                            && select1_1 != _select1_1
+                            && select2_1 != _select2_1
+                            && select3_1 != _select3_1
+                            && select4_1 != _select4_1
+                            && select5_1 != _select5_1
+                            && SelectAll_2 == _selectall_2
+                            && select1_2 != _select1_2
+                            && select2_2 != _select2_2
+                            && select3_2 != _select3_2
+                            && select4_2 != _select4_2
+                            && select5_2 != _select5_2)
                         {
                             i = 1;
                         }
                         break;
                     case 6:
-                        if (SelectAll == _selectall
-                            && select1 != _select1
-                            && select2 != _select2
-                            && select3 != _select3
-                            && select4 != _select4
-                            && select5 != _select5
-                            && select6 != _select6)
+                        if (SelectAll_1 == _selectall_1
+                            && select1_1 != _select1_1
+                            && select2_1 != _select2_1
+                            && select3_1 != _select3_1
+                            && select4_1 != _select4_1
+                            && select5_1 != _select5_1
+                            && select6_1 != _select6_1
+                            && SelectAll_2 == _selectall_2
+                            && select1_2 != _select1_2
+                            && select2_2 != _select2_2
+                            && select3_2 != _select3_2
+                            && select4_2 != _select4_2
+                            && select5_2 != _select5_2
+                            && select6_2 != _select6_2)
                         {
                             i = 1;
                         }

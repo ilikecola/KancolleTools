@@ -1217,9 +1217,9 @@ namespace KancolleMacro
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(374, 34);
+            this.pictureBox1.Location = new System.Drawing.Point(474, 34);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(344, 147);
+            this.pictureBox1.Size = new System.Drawing.Size(244, 147);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 3;
             this.pictureBox1.TabStop = false;
@@ -1236,7 +1236,7 @@ namespace KancolleMacro
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(370, 12);
+            this.label25.Location = new System.Drawing.Point(470, 12);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(76, 19);
             this.label25.TabIndex = 1;
@@ -1249,7 +1249,7 @@ namespace KancolleMacro
             this.listBox1.ItemHeight = 19;
             this.listBox1.Location = new System.Drawing.Point(3, 6);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(357, 175);
+            this.listBox1.Size = new System.Drawing.Size(461, 175);
             this.listBox1.TabIndex = 0;
             // 
             // fleet2timer
