@@ -38,40 +38,55 @@ namespace KancolleMacro
 
         public void MainThread()
         {
-            bool a = true;
-            while(a){
-                Thread.Sleep(500 + this.RndTime());
-                if (TeamNO == 2){
-                    a = convarible.Threadflag[1] || convarible.Threadflag[2];
-                    if (a == false) break;
-                }else if(TeamNO == 3){
-                    a = convarible.Threadflag[0] || convarible.Threadflag[2];
-                    if (a == false) break;
-                }
-                else if (TeamNO == 4){
-                    a = convarible.Threadflag[0] || convarible.Threadflag[1];
-                    if (a == false) break;
-                }
-            }
-            convarible.Threadflag[TeamNO - 2] = true;
-            threadmanager[TeamNO - 2].Sendlistboxmessage("线程" + (TeamNO - 1) + "已启动");
-            threadmanager[TeamNO - 2].Sendlabelmessage("线程" + (TeamNO - 1) + "已启动");
-            convarible.TeamSupply[TeamNO - 2] = true;
-
-            Gohome();
-            threadmanager[TeamNO - 2].Sendlistboxmessage("准备开始补给");
-            //while(convarible.TeamSupply[0] == true || convarible.TeamSupply[1] == true || convarible.TeamSupply[2] == true)
-            //{
-            //    Thread.Sleep(200 + this.RndTime());
-            //    GoSupply();
-            //}
-            while (convarible.TeamSupply[TeamNO - 2] == true)
+            try
             {
-                Thread.Sleep(200 + this.RndTime());
-                GoSupply();
+                bool a = true;
+                while (a)
+                {
+                    Thread.Sleep(500 + this.RndTime());
+                    if (TeamNO == 2)
+                    {
+                        a = convarible.Threadflag[1] || convarible.Threadflag[2];
+                        if (a == false) break;
+                    }
+                    else if (TeamNO == 3)
+                    {
+                        a = convarible.Threadflag[0] || convarible.Threadflag[2];
+                        if (a == false) break;
+                    }
+                    else if (TeamNO == 4)
+                    {
+                        a = convarible.Threadflag[0] || convarible.Threadflag[1];
+                        if (a == false) break;
+                    }
+                }
+                convarible.Threadflag[TeamNO - 2] = true;
+                threadmanager[TeamNO - 2].Sendlistboxmessage("线程" + (TeamNO - 1) + "已启动");
+                threadmanager[TeamNO - 2].Sendlabelmessage("线程" + (TeamNO - 1) + "已启动");
+                convarible.TeamSupply[TeamNO - 2] = true;
+
+                Gohome();
+                threadmanager[TeamNO - 2].Sendlistboxmessage("准备开始补给");
+                //while(convarible.TeamSupply[0] == true || convarible.TeamSupply[1] == true || convarible.TeamSupply[2] == true)
+                //{
+                //    Thread.Sleep(200 + this.RndTime());
+                //    GoSupply();
+                //}
+                while (convarible.TeamSupply[TeamNO - 2] == true)
+                {
+                    Thread.Sleep(200 + this.RndTime());
+                    GoSupply();
+                }
+                GoExpedition();
+                convarible.Threadflag[TeamNO - 2] = false;
             }
-            GoExpedition();
-            convarible.Threadflag[TeamNO - 2] = false;
+            catch (ThreadAbortException e)
+            {
+
+                threadmanager[TeamNO - 2].Sendlistboxmessage("线程被中止");
+                threadmanager[TeamNO - 2].Sendlabelmessage("线程被中止");
+                threadmanager[TeamNO - 2].Sendlistboxmessage("Exception message:" + e.Message);
+            }
         }
 
         private void Gohome ()
