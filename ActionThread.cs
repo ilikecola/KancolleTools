@@ -476,23 +476,23 @@ namespace KancolleMacro
                 threadmanager[TeamNO - 2].Sendlistboxmessage("CheckPointCurrent_6:" + select5_1 + " " + select5_2);
                 threadmanager[TeamNO - 2].Sendlistboxmessage("CheckPointCurrent_7:" + select6_1 + " " + select6_2);
 
-                if (select1_1 == "C1D1E2"
-                && select2_1 == "B9C8DA"
-                && select3_1 == "B8CCDE"
-                && select4_1 == "C1D0E0"
-                && (select5_1 == "D7E3EB" || select5_1 == "C1D2E2")
-                && (select6_1 == "CDDBE3" || select6_1 == "BDCFE0")
-                && select1_2 == "BED0E2"
-                && select2_2 == "BBCBDB"
-                && select3_2 == "B9CFE0"
-                && select4_2 == "BBD2E0"
-                && (select5_2 == "D3E2E5" || select5_2 == "C1D2E1")
-                && (select6_2 == "C8DCE1" || select6_2 == "BACEDE"))
-                {
-                    threadmanager[TeamNO - 2].Sendlistboxmessage(TeamNO + "队已补给");
-                    i = 1;
-                    convarible.TeamSupply[number - 2] = false;
-                }
+                //if (select1_1 == "C1D1E2"
+                //&& select2_1 == "B9C8DA"
+                //&& select3_1 == "B8CCDE"
+                //&& select4_1 == "C1D0E0"
+                //&& (select5_1 == "D7E3EB" || select5_1 == "C1D2E2")
+                //&& (select6_1 == "CDDBE3" || select6_1 == "BDCFE0")
+                //&& select1_2 == "BED0E2"
+                //&& select2_2 == "BBCBDB"
+                //&& select3_2 == "B9CFE0"
+                //&& select4_2 == "BBD2E0"
+                //&& (select5_2 == "D3E2E5" || select5_2 == "C1D2E1")
+                //&& (select6_2 == "C8DCE1" || select6_2 == "BACEDE"))
+                //{
+                //    i = 1;
+                //    convarible.TeamSupply[number - 2] = false;
+                //    break;
+                //}
 
                 switch (num)
                 {
