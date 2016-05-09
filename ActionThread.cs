@@ -160,13 +160,13 @@ namespace KancolleMacro
                     j = 0;
                     hasExpGet = true;
                     actioneevent.LeftClick(GameHwnd, 755 + this.RndPixel(), 432 + this.RndPixel());
-                    Thread.Sleep(100 + this.RndTime());
+                    Thread.Sleep(110 + this.RndTime());
                 }else
                 {
                     j = 1;
                 }
 
-                Thread.Sleep(100 + this.RndTime());
+                Thread.Sleep(110 + this.RndTime());
 
                 //2队同时归来的情况
                 SecFlag = actioneevent.GetPixelColor(GameHwnd, 521, 28);
@@ -174,7 +174,7 @@ namespace KancolleMacro
                     i = 0;
                     hasExpGet = false;
                     actioneevent.LeftClick(GameHwnd, 521 + this.RndPixel(), 28 + this.RndPixel());
-                    Thread.Sleep(100 + this.RndTime());
+                    Thread.Sleep(110 + this.RndTime());
                 }
                 else
                 {
@@ -460,24 +460,24 @@ namespace KancolleMacro
                 threadmanager[TeamNO - 2].Sendlistboxmessage("ClickCheckPointPrevious:" + _selectall_1 + " " + _selectall_2);
                 do
                 {
-                    Thread.Sleep(20 + this.RndTime());
+                    Thread.Sleep(110 + this.RndTime());
                     actioneevent.MOUSEMOVE(GameHwnd, 120 + (this.RndPixel() / 2), 120 + (this.RndPixel() / 2));
-                    Thread.Sleep(20 + this.RndTime());
+                    Thread.Sleep(110 + this.RndTime());
                     actioneevent.LeftClick(GameHwnd, 120 + (this.RndPixel() / 2), 120 + (this.RndPixel() / 2));
                     threadmanager[TeamNO - 2].Sendlistboxmessage(TeamNO + "队正在补给");
                     Thread.Sleep(1000 + this.RndTime());
 
                     //First Check
                     actioneevent.MOUSEMOVE(GameHwnd, 0 + this.RndPixel(), 0 + this.RndPixel());
-                    Thread.Sleep(50 + this.RndTime());
+                    Thread.Sleep(110 + this.RndTime());
                     actioneevent.MOUSEMOVE(GameHwnd, 120 + (this.RndPixel() / 2), 120 + (this.RndPixel() / 2));
                     SelectAll_1 = actioneevent.GetPixelColor(GameHwnd, 120, 120);
                     SelectAll_2 = actioneevent.GetPixelColor(GameHwnd, 115, 120);
                     threadmanager[TeamNO - 2].Sendlistboxmessage("ClickCheckPointCurrent:" + SelectAll_1 + " " + SelectAll_2);
-                } while(SelectAll_1 == _selectall_1 || SelectAll_2 == _selectall_2);
+                } while(SelectAll_1 != _selectall_1 && SelectAll_2 != _selectall_2);
 
                 actioneevent.MOUSEMOVE(GameHwnd, 0 + this.RndPixel(), 0 + this.RndPixel());
-                Thread.Sleep(100 + this.RndTime());
+                Thread.Sleep(110 + this.RndTime());
                 _selectall_1 = actioneevent.GetPixelColor(GameHwnd, 120, 120);
                 actioneevent.MOUSEMOVE(GameHwnd, 120 + (this.RndPixel() / 2), 120 + (this.RndPixel() / 2));
                 Thread.Sleep(250 + this.RndTime());
@@ -896,7 +896,7 @@ namespace KancolleMacro
                                 threadmanager[TeamNO - 2].Sendtimemessage("overstart");
                                 for (int i = 1; i == 1; )
                                 {
-                                    Thread.Sleep(100 + this.RndTime());
+                                    Thread.Sleep(110 + this.RndTime());
                                     Wait = actioneevent.GetPixelColor(GameHwnd, 272, 464);
                                     if (Wait == "C2DB8D")
                                     {
@@ -999,26 +999,30 @@ namespace KancolleMacro
             return state;
         }
 
-        private double rndint()
-        {
-            double rnd;
-            Thread.Sleep(100);
-            Random ra = new Random();
-            rnd = ra.NextDouble();
-            return rnd;
-        }
+        //private double rndint()
+        //{
+        //    double rnd;
+        //    Thread.Sleep(100);
+        //    Random ra = new Random();
+        //    rnd = ra.NextDouble();
+        //    return rnd;
+        //}
 
         private int RndTime()
         {
+            Random ra = new Random();
             int rnd;
-            rnd = (int)(rndint() * convarible.RndTimeRange - convarible.RndTimeRange / 2);
+            rnd = ra.Next(convarible.RndTimeRange);
+            //rnd = (int)(rndint() * convarible.RndTimeRange - convarible.RndTimeRange / 2);
             return rnd;
         }
 
         private int RndPixel()
         {
+            Random ra = new Random();
             int rnd;
-            rnd = (int)(rndint() * convarible.RndPixelRange - convarible.RndPixelRange / 2);
+            rnd = ra.Next(convarible.RndPixelRange);
+            //rnd = (int)(rndint() * convarible.RndPixelRange - convarible.RndPixelRange / 2);
             return rnd;
         }
 
