@@ -331,7 +331,7 @@ namespace KancolleMacro
 
 
             //Preload
-            actioneevent.MOUSEMOVE(GameHwnd, 0 + this.RndPixel(), 0 + this.RndPixel());
+            actioneevent.MOUSEMOVE(GameHwnd, 20 + this.RndPixel(), 20 + this.RndPixel());
 
             i = 0;
             _selectall_1 = actioneevent.GetPixelColor(GameHwnd, 120, 120);
@@ -364,14 +364,14 @@ namespace KancolleMacro
                 && _select2_1 == "B9C8DA"
                 && _select3_1 == "B8CCDE"
                 && _select4_1 == "C1D0E0"
-                && _select5_1 == "D7E3EB"
-                && _select6_1 == "CDDBE3"
+                && (_select5_1 == "D7E3EB" || _select5_1 == "C1D2E2")
+                && (_select6_1 == "CDDBE3" || _select6_1 == "BDCFE0")
                 && _select1_2 == "BED0E2"
                 && _select2_2 == "BBCBDB"
                 && _select3_2 == "B9CFE0"
                 && _select4_2 == "BBD2E0"
-                && _select5_2 == "D3E2E5"
-                && _select6_2 == "C8DCE1")
+                && (_select5_2 == "D3E2E5" || _select5_2 == "C1D2E1")
+                && (_select6_2 == "C8DCE1" || _select6_2 == "BACEDE"))
             {
                 threadmanager[TeamNO - 2].Sendlistboxmessage(TeamNO + "队已补给");
                 i = 1;
@@ -437,7 +437,7 @@ namespace KancolleMacro
                     Thread.Sleep(1000 + this.RndTime());
 
                     //First Check
-                    actioneevent.MOUSEMOVE(GameHwnd, 0 + this.RndPixel(), 0 + this.RndPixel());
+                    actioneevent.MOUSEMOVE(GameHwnd, 20 + this.RndPixel(), 20 + this.RndPixel());
                     Thread.Sleep(110 + this.RndTime());
                     actioneevent.MOUSEMOVE(GameHwnd, 120 + (this.RndPixel() / 2), 120 + (this.RndPixel() / 2));
                     SelectAll_1 = actioneevent.GetPixelColor(GameHwnd, 120, 120);
@@ -445,7 +445,7 @@ namespace KancolleMacro
                     threadmanager[TeamNO - 2].Sendlistboxmessage("ClickCheckPointCurrent:" + SelectAll_1 + " " + SelectAll_2);
                 } while(SelectAll_1 != _selectall_1 && SelectAll_2 != _selectall_2);
 
-                actioneevent.MOUSEMOVE(GameHwnd, 0 + this.RndPixel(), 0 + this.RndPixel());
+                actioneevent.MOUSEMOVE(GameHwnd, 20 + this.RndPixel(), 20 + this.RndPixel());
                 Thread.Sleep(110 + this.RndTime());
                 _selectall_1 = actioneevent.GetPixelColor(GameHwnd, 120, 120);
                 actioneevent.MOUSEMOVE(GameHwnd, 120 + (this.RndPixel() / 2), 120 + (this.RndPixel() / 2));
@@ -475,6 +475,25 @@ namespace KancolleMacro
                 threadmanager[TeamNO - 2].Sendlistboxmessage("CheckPointCurrent_5:" + select4_1 + " " + select4_2);
                 threadmanager[TeamNO - 2].Sendlistboxmessage("CheckPointCurrent_6:" + select5_1 + " " + select5_2);
                 threadmanager[TeamNO - 2].Sendlistboxmessage("CheckPointCurrent_7:" + select6_1 + " " + select6_2);
+
+                if (select1_1 == "C1D1E2"
+                && select2_1 == "B9C8DA"
+                && select3_1 == "B8CCDE"
+                && select4_1 == "C1D0E0"
+                && (select5_1 == "D7E3EB" || select5_1 == "C1D2E2")
+                && (select6_1 == "CDDBE3" || select6_1 == "BDCFE0")
+                && select1_2 == "BED0E2"
+                && select2_2 == "BBCBDB"
+                && select3_2 == "B9CFE0"
+                && select4_2 == "BBD2E0"
+                && (select5_2 == "D3E2E5" || select5_2 == "C1D2E1")
+                && (select6_2 == "C8DCE1" || select6_2 == "BACEDE"))
+                {
+                    threadmanager[TeamNO - 2].Sendlistboxmessage(TeamNO + "队已补给");
+                    i = 1;
+                    convarible.TeamSupply[number - 2] = false;
+                }
+
                 switch (num)
                 {
                     case 1:
