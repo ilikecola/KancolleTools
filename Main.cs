@@ -228,7 +228,8 @@ namespace KancolleMacro
                     label22.Text = GamehWnd.ToString();
                     label62.Text = GamehWnd.ToString();
                     listBox1.Items.Insert(0, currentTimestr + " 自动动设置句柄成功 句柄为:" + GamehWnd.ToString());
-                    MessageBox.Show("已自动找到POI窗口 窗口大小" + Gamewidth + "x" + Gameheight);
+                    listBox1.Items.Insert(0, currentTimestr + " Y修正值为" + convarible.poiYcorrect);
+                    MessageBox.Show("已自动找到POI窗口 窗口大小" + Gamewidth + "x" + Gameheight + " Y修正值为" + convarible.poiYcorrect);
                     
                 }                
             }
@@ -241,14 +242,19 @@ namespace KancolleMacro
 
         private int[] handleYCorrect(IntPtr hWnd)
         {
-            int i;
+            if (convarible.poiYcorrect > 0)
+            {
+                convarible.poiYcorrect = 0;
+            }
+            int i = 0;
+            string PixelColor = "";
             int[] correct = new int[2];
             correct[0] = 0;
             correct[1] = 0;
             ActionEvent actioneevent = new ActionEvent();
             for (i = 0;i<200;i++)
             {
-                string PixelColor = actioneevent.GetPixelColor(hWnd, 650, 0 + i);
+                PixelColor = actioneevent.GetPixelColor(hWnd, 50, 0 + i);
                 if (PixelColor != "2F2F2F" && PixelColor != "292929")
                 {
                     correct[0] = i;
@@ -881,7 +887,9 @@ namespace KancolleMacro
         private int RndTime()
         {
             int rnd;
-            rnd = (int)(rndint() * convarible.RndWaitTimeRange);
+            Random tor = new Random();
+            rnd = tor.Next(1,convarible.RndWaitTimeRange);
+            //rnd = (int)(rndint() * convarible.RndWaitTimeRange);
             return rnd;
         }
 

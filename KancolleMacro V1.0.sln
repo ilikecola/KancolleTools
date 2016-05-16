@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KancolleMacro", "KancolleMacro.csproj", "{EC2A3594-89D1-4337-B8C8-B353A8D88CDE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenCapture", "..\ScreenCapture\ScreenCapture\ScreenCapture.csproj", "{7549B05E-B5B9-4FC2-B940-F0B91296EDD3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +27,18 @@ Global
 		{EC2A3594-89D1-4337-B8C8-B353A8D88CDE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{EC2A3594-89D1-4337-B8C8-B353A8D88CDE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{EC2A3594-89D1-4337-B8C8-B353A8D88CDE}.Release|x86.ActiveCfg = Release|Any CPU
+		{7549B05E-B5B9-4FC2-B940-F0B91296EDD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7549B05E-B5B9-4FC2-B940-F0B91296EDD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7549B05E-B5B9-4FC2-B940-F0B91296EDD3}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{7549B05E-B5B9-4FC2-B940-F0B91296EDD3}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{7549B05E-B5B9-4FC2-B940-F0B91296EDD3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7549B05E-B5B9-4FC2-B940-F0B91296EDD3}.Debug|x86.Build.0 = Debug|Any CPU
+		{7549B05E-B5B9-4FC2-B940-F0B91296EDD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7549B05E-B5B9-4FC2-B940-F0B91296EDD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7549B05E-B5B9-4FC2-B940-F0B91296EDD3}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{7549B05E-B5B9-4FC2-B940-F0B91296EDD3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{7549B05E-B5B9-4FC2-B940-F0B91296EDD3}.Release|x86.ActiveCfg = Release|Any CPU
+		{7549B05E-B5B9-4FC2-B940-F0B91296EDD3}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
