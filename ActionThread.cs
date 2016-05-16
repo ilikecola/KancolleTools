@@ -647,6 +647,7 @@ namespace KancolleMacro
                 Wait = actioneevent.GetPixelColor(GameHwnd, 720, 190);
                 if (Wait == "D3E1EA")
                 {
+                    success = true;
                     break;
                 }
             } while (true);
