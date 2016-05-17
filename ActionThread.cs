@@ -235,7 +235,7 @@ namespace KancolleMacro
                     Thread.Sleep(2000 + this.RndTime());
                     wait = actioneevent.GetPixelColor(GameHwnd, 555, 250);
                     NextFlag = actioneevent.GetPixelColor(GameHwnd, 760, 441);
-                } while (!(wait == "4ADEFE" && (NextFlag == "A39F3F" || NextFlag == "ADA94D" || NextFlag == "A19F42")));
+                } while (!((wait == "4ADEFE" || wait == "7FBDCC") && (NextFlag == "A39F3F" || NextFlag == "ADA94D" || NextFlag == "A19F42")));
                 threadmanager[TeamNO - 2].Sendtimemessage("overstop");
                 threadmanager[TeamNO - 2].Sendtimemessage("overstart");
                 //点击齿轮
@@ -577,6 +577,7 @@ namespace KancolleMacro
                 Thread.Sleep(1000 + this.RndTime());
             }
 
+            success = true;
             //远征完成
             return success;
         }
@@ -588,19 +589,23 @@ namespace KancolleMacro
             //初始化
             string Wait = null;
             bool success = false;
+            string _decide = null;
             //========判断是否切换舰队
             string[] PreviousBefore = new string[2];
             string[] NextBefore = new string[2];
             string[] PreviousAfter = new string[2];
             string[] NextAfter = new string[2];
+            _decide = actioneevent.GetPixelColor(GameHwnd, 677, 444);
 
             //选择该海域所去舰队
             threadmanager[TeamNO - 2].Sendlistboxmessage("第" + TeamNO + "舰队尝试移动到指定地图");
-            while (!MoveToExpMap(convarible.Team_index[TeamNO - 2]))
+            threadmanager[TeamNO - 2].Sendtimemessage("overstart");
+            while (!(MoveToExpMap(convarible.Team_index[TeamNO - 2]) && _decide != actioneevent.GetPixelColor(GameHwnd, 677, 444)))
             {
                 Thread.Sleep(1000 + this.RndTime());
             }
             threadmanager[TeamNO - 2].Sendlistboxmessage("第" + TeamNO + "舰队移动成功");
+            threadmanager[TeamNO - 2].Sendtimemessage("overstop");
 
             Thread.Sleep(200 + this.RndTime());
 
@@ -619,6 +624,7 @@ namespace KancolleMacro
                 }
 
                 threadmanager[TeamNO - 2].Sendlistboxmessage("选择第" + TeamNO.ToString() + "舰队");
+                threadmanager[TeamNO - 2].Sendtimemessage("overstart");
                 do
                 {
                     actioneevent.LeftClick(GameHwnd, 395 + 29 * (TeamNO - 2) + this.RndPixel() / 2, 117 + this.RndPixel() / 2);//=======第TeamNO舰队
@@ -632,7 +638,16 @@ namespace KancolleMacro
                             && PreviousBefore[1] != PreviousAfter[1]
                             && NextBefore[0] != NextAfter[0]
                             && NextBefore[1] != NextAfter[1]));
+                threadmanager[TeamNO - 2].Sendtimemessage("overstop");
             }
+
+            threadmanager[TeamNO - 2].Sendtimemessage("overstart");
+            do
+            {
+                Thread.Sleep(200 + this.RndTime());
+                _decide = actioneevent.GetPixelColor(GameHwnd, 694, 445);
+            } while (_decide != "7D8F1C");
+            threadmanager[TeamNO - 2].Sendtimemessage("overstop");
 
             //点击远征开始
             actioneevent.LeftClick(GameHwnd, 624 + this.RndPixel(), 445 + this.RndPixel());//远征开始
